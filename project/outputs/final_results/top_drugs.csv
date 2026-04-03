@@ -1,0 +1,16 @@
+feature,importance
+drug_Tramadol,0.0300061392325034
+drug_Naproxen,0.0183463490964778
+drug_Aleve,0.0080165805759783
+drug_Meloxicam,0.0075037987923068
+drug_Diclofenac,0.0067716989062604
+drug_Oxycodone,0.0061478337706759
+drug_Acetaminophen / hydrocodone,0.0051881617419138
+drug_Naproxen / sumatriptan,0.0044802836968548
+drug_Celebrex,0.0041969823367158
+drug_Acetaminophen / butalbital / caffeine,0.003749227128844
+drug_Acetaminophen / oxycodone,0.0036728050267043
+drug_Acetaminophen / aspirin / caffeine,0.0036635797186382
+drug_Ibuprofen,0.0022782586511769
+drug_Other,0.0014497377041793
+drug_Acetaminophen / dichloralphenazone / isometheptene mucate,0.0012679964454531

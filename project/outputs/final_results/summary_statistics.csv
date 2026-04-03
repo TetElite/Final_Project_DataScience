@@ -1,0 +1,8 @@
+Metric,Value
+Total Features,52
+Drug Features,31
+Condition Features,13
+Text Features,5
+Test Samples,495
+Correct Predictions,356
+Accuracy Rate,71.92%

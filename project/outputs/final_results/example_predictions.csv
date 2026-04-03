@@ -1,0 +1,11 @@
+Example,Actual,Predicted,Confidence,Correct,Prob_Not_Eff,Prob_Partial,Prob_Effective
+1,Not Effective,Effective,73.1%,✗,15.4%,11.5%,73.1%
+2,Effective,Effective,73.7%,✓,16.7%,9.6%,73.7%
+3,Effective,Effective,82.5%,✓,9.1%,8.4%,82.5%
+4,Effective,Effective,89.5%,✓,3.7%,6.9%,89.5%
+5,Partially Effective,Effective,61.9%,✗,17.9%,20.2%,61.9%
+6,Effective,Effective,61.5%,✓,23.9%,14.6%,61.5%
+7,Effective,Effective,75.3%,✓,12.6%,12.2%,75.3%
+8,Effective,Effective,82.1%,✓,10.7%,7.2%,82.1%
+9,Effective,Effective,76.8%,✓,14.7%,8.5%,76.8%
+10,Effective,Effective,87.9%,✓,2.1%,10.1%,87.9%

@@ -1,0 +1,14 @@
+feature,importance
+condition_headache,0.0232438301625745
+condition_back pain,0.0141161529464659
+condition_migraine,0.010814724486619
+condition_chronic pain,0.0100588369677403
+condition_osteoarthritis,0.0098554976160477
+condition_sciatica,0.0072802753845988
+condition_rheumatoid arthritis,0.0070234607173265
+condition_muscle pain,0.00274806806502
+condition_neck pain,0.0
+condition_cluster headaches,0.0
+condition_juvenile rheumatoid arthritis,0.0
+condition_spondyloarthritis,0.0
+condition_toothache,0.0

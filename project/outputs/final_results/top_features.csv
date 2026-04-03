@@ -1,0 +1,21 @@
+feature,importance
+usefulCount,0.1818456373465359
+uniqueID,0.1359737337065214
+year,0.1358473254014068
+avg_word_length,0.1089892239704337
+review_length,0.1007772186864861
+review_word_count,0.0936843702723115
+has_positive_keywords,0.0313347082193274
+drug_Tramadol,0.0300061392325034
+condition_headache,0.0232438301625745
+drug_Naproxen,0.0183463490964778
+condition_back pain,0.0141161529464659
+has_negative_keywords,0.0139235126696147
+condition_migraine,0.010814724486619
+condition_chronic pain,0.0100588369677403
+condition_osteoarthritis,0.0098554976160477
+drug_Aleve,0.0080165805759783
+drug_Meloxicam,0.0075037987923068
+condition_sciatica,0.0072802753845988
+condition_rheumatoid arthritis,0.0070234607173265
+drug_Diclofenac,0.0067716989062604
