@@ -68,6 +68,8 @@ project/
 │   ├── data_loader.py    # Data loading utilities
 │   ├── cleaning.py       # Cleaning functions
 │   └── visualization.py  # Plotting helpers
+├── app/                  # Streamlit dashboard application
+│   └── dashboard.py      # Interactive web interface
 ├── outputs/
 │   ├── plots/           # Saved visualizations
 │   ├── models/          # Trained ML models
@@ -93,13 +95,22 @@ source venv/bin/activate
 pip install -r project/requirements.txt
 ```
 
-### 3. Launch Jupyter Notebook
+### 3. Launch the Streamlit Dashboard (Primary Interface)
+```bash
+streamlit run project/app/dashboard.py
+```
+
+The interactive dashboard will open in your browser, providing the easiest way to:
+- Make live predictions
+- Explore model performance
+- Visualize data insights
+
+### 4. Alternative: Use Jupyter Notebooks
 ```bash
 cd project/notebooks
 jupyter notebook
 ```
 
-### 4. Run Notebooks in Order
 Execute the notebooks sequentially (01 → 06):
 1. **01_data_collection.ipynb** - Download and filter dataset
 2. **02_data_cleaning.ipynb** - Clean and prepare data
@@ -107,6 +118,27 @@ Execute the notebooks sequentially (01 → 06):
 4. **04_feature_engineering.ipynb** - Create features for ML
 5. **05_modeling.ipynb** - Train and evaluate model
 6. **06_final_analysis.ipynb** - Generate insights and results
+
+---
+
+## 🌐 Streamlit Dashboard
+
+This project includes an **interactive web dashboard** built with Streamlit, providing a user-friendly interface to interact with the Pain Medication Effectiveness Predictor.
+
+### Launch the Dashboard
+```bash
+streamlit run project/app/dashboard.py
+```
+
+### Key Features
+- **Live Predictions** - Enter patient details and medication to get instant effectiveness predictions
+- **Interactive Visualizations** - Explore data distributions, medication effectiveness, and condition analysis
+- **Model Performance Metrics** - View accuracy, confusion matrix, and classification reports
+- **Feature Importance** - Understand which factors most influence predictions
+- **Patient Insights** - Analyze how different patient characteristics affect medication effectiveness
+
+### Why Use the Dashboard?
+The Streamlit dashboard is the **primary way to interact with the model**. It provides an intuitive interface without requiring code knowledge, making predictions accessible to healthcare professionals and researchers.
 
 ---
 
@@ -164,6 +196,7 @@ The model classifies medication effectiveness based on patient ratings:
 - **numpy** - Numerical operations
 - **matplotlib & seaborn** - Visualizations
 - **scikit-learn** - Machine learning
+- **streamlit** - Interactive web dashboard
 - **Jupyter Notebook** - Interactive development
 
 ---
