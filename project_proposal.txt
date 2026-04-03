@@ -1,0 +1,75 @@
+PROJECT
+PROPOSAL
+PAIN MEDICATION
+EFFECTIVENESS PREDICTOR
+By Team 3
+Lecturer: Kim Sokhey
+MEET TEAM
+Choeng Rayu Tep Somnang Tet Elite Sophal Taingchhay
+1
+Table content
+1.PROBLEM STATEMENT
+2.OBJECTIVES
+3.DATASET DESCRIPTION
+4.METHODOLOGY
+5.PROJECT PLANNING
+6.EXPECTED OUTCOME
+2
+PROBLEM STATEMENT
+Same pain medication Doctors use trial-and-error Patients have no way to
+→
+works differently for delays relief, wastes know if a painkiller will
+different people time and money work for THEM before
+taking it
+CURRENT LIMITATION:
+No simple tool to predict effectiveness based on patient
+3
+profile.
+Objectives
+4
+MAIN GOAL: Build a machine learning model that predicts whether a specific pain medication will be
+effective for a given patient.
+3. KEY FINDINGS
+1. PREDICTION (3 levels) 2. ADDITIONAL INSIGHTS
+• Which patient traits matter most? (age,
+• Effective • Confidence score (e.g., 85% sure)
+condition)
+• Partially Effective • How similar patients responded
+• Which pain conditions respond best to
+• Not Effective • What factors influenced the prediction
+medication?
+DATASET DESCRIPTION
+DATA QUALITY:
+• Unclean - contains missing values, inconsistent text
+(e. g., "Head ache", "HEADACHE", "head ache")
+SOURCE: Kaggle - "Drug Review Dataset"
+• Perfect for practicing data cleaning!
+FILTERED VERSION:
+• Keep ONLY pain-related conditions:
+Headache, Back pain, etc.
+• Keep ONLY common pain medications:
+ORIGINAL DATA:
+Ibuprofen, Acetaminophen, etc.
+Rows: more than 5k+ patient reviews
+Columns: drugName, condition, review, rating, date 5
+METHODOLOGY
+STEP 1: DATA COLLECTION & FILTERING STEP 4: MODEL TRAINING
+STEP 2: DATA CLEANING
+STEP 5: EVALUATION
+STEP 3: FEATURE ENGINEERING
+6
+Project Planing
+7
+Expected Outcome
+Three simple outcomes:
+Prediction Model Patient Insights
+Working model that predicts: Effective / Partial / Not Effective Confidence score for each prediction Shows how similar
+Target accuracy: 75% or higher patients responded Identifies key factors (age, condition,
+drug)
+Key Findings
+Which pain conditions respond best Whether age affects Example:
+→
+effectiveness Which pain medications work best "Ibuprofen for headache EFFECTIVE (87% confident)"
+8
+Thank You
+So Much!
