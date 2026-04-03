@@ -1,0 +1,53 @@
+feature,importance
+usefulCount,0.18184563734653597
+uniqueID,0.1359737337065214
+year,0.13584732540140687
+avg_word_length,0.10898922397043374
+review_length,0.10077721868648616
+review_word_count,0.09368437027231154
+has_positive_keywords,0.03133470821932744
+drug_Tramadol,0.03000613923250349
+condition_headache,0.02324383016257451
+drug_Naproxen,0.018346349096477886
+condition_back pain,0.014116152946465923
+has_negative_keywords,0.013923512669614719
+condition_migraine,0.010814724486619093
+condition_chronic pain,0.010058836967740384
+condition_osteoarthritis,0.009855497616047763
+drug_Aleve,0.0080165805759783
+drug_Meloxicam,0.007503798792306868
+condition_sciatica,0.00728027538459887
+condition_rheumatoid arthritis,0.00702346071732657
+drug_Diclofenac,0.006771698906260418
+drug_Oxycodone,0.006147833770675912
+drug_Acetaminophen / hydrocodone,0.005188161741913885
+drug_Naproxen / sumatriptan,0.004480283696854879
+drug_Celebrex,0.004196982336715811
+drug_Acetaminophen / butalbital / caffeine,0.0037492271288440673
+drug_Acetaminophen / oxycodone,0.0036728050267043092
+drug_Acetaminophen / aspirin / caffeine,0.0036635797186382575
+condition_muscle pain,0.002748068065020026
+drug_Ibuprofen,0.002278258651176927
+drug_Other,0.0014497377041793385
+drug_Acetaminophen / dichloralphenazone / isometheptene mucate,0.0012679964454531463
+drug_Aspirin / butalbital / caffeine,0.0012559166273600425
+drug_Diclofenac / misoprostol,0.0012331482911544327
+drug_Acetaminophen / butalbital / caffeine / codeine,0.0009496479450389133
+drug_Indomethacin,0.0007943576600678741
+drug_Advil,0.0002902809973219904
+drug_Famotidine / ibuprofen,0.00024622809680895037
+drug_Acetaminophen / pamabrom,0.00022841388355929461
+drug_Aspirin,0.00022042891688515309
+drug_Aspirin / butalbital / caffeine / codeine,0.0001986122118141938
+drug_Acetaminophen / butalbital,0.0001628565182806634
+drug_Esomeprazole / naproxen,0.00011490559106277449
+drug_Motrin,3.3624386732499034e-05
+drug_Acetaminophen / caffeine / isometheptene mucate,1.0631622053978522e-05
+drug_Acetaminophen / phenyltoloxamine,4.937808144880071e-06
+condition_neck pain,0.0
+condition_cluster headaches,0.0
+condition_juvenile rheumatoid arthritis,0.0
+condition_spondyloarthritis,0.0
+condition_toothache,0.0
+drug_Acetaminophen,0.0
+drug_Acetaminophen / diphenhydramine,0.0
