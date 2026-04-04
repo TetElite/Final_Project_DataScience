@@ -38,9 +38,9 @@ def load_data():
         processed_data = pd.read_csv(DATA_DIR / "processed" / "pain_meds_ml_ready.csv")
         
         # Load results
-        top_drugs = pd.read_csv(RESULTS_DIR / "top_drugs.csv")
-        top_conditions = pd.read_csv(RESULTS_DIR / "top_conditions.csv")
-        feature_importance = pd.read_csv(MODELS_DIR / "feature_importance.csv")
+        top_drugs = pd.read_csv(RESULTS_DIR / "top_drugs_stats.csv")
+        top_conditions = pd.read_csv(RESULTS_DIR / "condition_effectiveness.csv")
+        feature_importance = pd.read_csv(RESULTS_DIR / "top_drugs.csv")  # This is actually feature importance
         test_predictions = pd.read_csv(MODELS_DIR / "test_predictions.csv")
         
         return {
@@ -381,6 +381,11 @@ def show_insights():
         ax.set_xlabel('Average Effectiveness Rating')
         ax.set_title('Average Medication Effectiveness by Pain Condition')
         ax.invert_yaxis()
+        
+        # Add effectiveness rate as text
+        for i, (idx, row) in enumerate(condition_stats.iterrows()):
+            ax.text(row['avg_rating'] + 0.1, i, f"{row['effectiveness_rate']:.1f}%", 
+                   va='center', fontsize=9)
         
         st.pyplot(fig)
         plt.close()
