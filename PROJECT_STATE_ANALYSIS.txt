@@ -1,0 +1,780 @@
+================================================================================
+                    PROJECT STATE ANALYSIS REPORT
+                Pain Medication Effectiveness Predictor
+================================================================================
+Generated: April 4, 2026
+Project Path: /Users/macbook/CADT/Term2Year3/Data/Final_Project/project
+Report Status: CRITICAL ISSUES IDENTIFIED
+
+
+================================================================================
+1. CRITICAL FINDINGS SECTION
+================================================================================
+
+*** CRITICAL BUG #1: FAKE METRICS IN DASHBOARD ***
+Location: project/app/dashboard.py lines 211-217
+Issue: Dashboard displays HARDCODED fake accuracy metrics
+   
+   Displayed (FAKE):              Actual (from model):
+   - Overall Accuracy: 87.3%      → REAL: 71.92%
+   - Precision: 85.6%             → REAL: 59.61%
+   - F1 Score: 86.4%              → REAL: 63.63%
+
+Code:
+    with col1:
+        st.metric("Overall Accuracy", "87.3%", "+2.1%")    # Line 211 - FAKE
+    
+    with col2:
+        st.metric("Precision", "85.6%", "+1.5%")           # Line 214 - FAKE
+    
+    with col3:
+        st.metric("F1 Score", "86.4%", "+1.8%")            # Line 217 - FAKE
+
+
+*** CRITICAL BUG #2: PREDICTIONS DON'T USE THE ML MODEL ***
+Location: project/app/dashboard.py lines 151-163
+Issue: The "Predict" button uses FAKE RULE-BASED LOGIC instead of the 
+       trained Random Forest model
+
+Current Code (FAKE PREDICTIONS):
+    # Simple rule-based prediction based on rating
+    if rating >= 8:
+        effectiveness = "High"
+        confidence = 0.85
+        color = "green"
+    elif rating >= 5:
+        effectiveness = "Medium"
+        confidence = 0.70
+        color = "orange"
+    else:
+        effectiveness = "Low"
+        confidence = 0.80
+        color = "red"
+
+Reality Check:
+- Model IS loaded (line 115): model, feature_names = load_model()
+- Model IS NOT USED for predictions
+- Instead: Simple if/else based ONLY on rating value
+- This completely bypasses the 52-feature ML model
+- User inputs (drug, condition, review text) are IGNORED
+
+
+*** CRITICAL BUG #3: FAKE CONFUSION MATRIX ***
+Location: project/app/dashboard.py lines 244-248
+Issue: Display shows hardcoded fake confusion matrix values
+
+Displayed (FAKE):
+    confusion_matrix = np.array([
+        [770, 60, 20],      # Line 244-248 - COMPLETELY FABRICATED
+        [80, 984, 136],
+        [45, 115, 765]
+    ])
+
+Actual Confusion Matrix (from executed notebook):
+    [[  10   72    0]     # Class 0: Not Effective
+     [   0    0   55]     # Class 1: Partially Effective (0% recall!)
+     [   1   10  347]]    # Class 2: Effective
+
+
+*** CRITICAL BUG #4: FAKE CLASSIFICATION REPORT ***
+Location: project/app/dashboard.py lines 225-231
+Issue: Fabricated per-class performance metrics
+
+Displayed (FAKE):
+    report_data = {
+        'Effectiveness Level': ['High (8-10)', 'Medium (5-7)', 'Low (1-4)'],
+        'Precision': [0.89, 0.84, 0.83],
+        'Recall': [0.91, 0.82, 0.86],
+        'F1-Score': [0.90, 0.83, 0.84],
+        'Support': [850, 1200, 925]
+    }
+
+Actual Classification Report (from executed notebook):
+    Class                      Precision  Recall  F1-Score  Support
+    Not Effective (0)          0.37       0.12    0.18      82
+    Partially Effective (1)    0.00       0.00    0.00      55
+    Effective (2)              0.74       0.97    0.84      358
+
+
+*** MODERATE ISSUE #1: CLASS IMBALANCE ***
+The model CANNOT predict "Partially Effective" (class 1)
+- Precision: 0.00
+- Recall: 0.00
+- F1-Score: 0.00
+- All 55 test samples misclassified
+
+
+*** MINOR ISSUE #1: DOCUMENTATION INCONSISTENCY ***
+Location: project/app/dashboard.py line 422, 482
+Issue: About page and sidebar claim "87.3% accuracy" - should be 71.92%
+
+
+================================================================================
+2. PROJECT STRUCTURE
+================================================================================
+
+project/
+├── app/
+│   ├── dashboard.py              (503 lines, CONTAINS BUGS)
+│   ├── __init__.py
+│   └── __pycache__/
+│
+├── data/
+│   ├── raw/
+│   │   ├── drugsComTrain_raw.csv
+│   │   └── drugsComTest_raw.csv
+│   ├── filtered/
+│   │   └── pain_meds_filtered.csv
+│   ├── cleaned/
+│   │   └── pain_meds_cleaned.csv      (968 KB, 2,976 rows)
+│   └── processed/
+│       └── pain_meds_ml_ready.csv     (2.0 MB, 2,976 rows)
+│
+├── notebooks/
+│   ├── 01_data_collection.ipynb
+│   ├── 01_data_collection_executed.ipynb
+│   ├── 02_data_cleaning.ipynb
+│   ├── 02_data_cleaning_executed.ipynb
+│   ├── 03_eda_executed.ipynb
+│   ├── 04_feature_engineering.ipynb
+│   ├── 04_feature_engineering_executed.ipynb
+│   ├── 05_modeling.ipynb
+│   ├── 05_modeling_executed.ipynb     (CONTAINS ACTUAL RESULTS)
+│   ├── 06_final_analysis.ipynb
+│   └── 06_final_analysis_executed.ipynb
+│
+├── outputs/
+│   ├── models/
+│   │   ├── rf_model.pkl               (Trained Random Forest)
+│   │   ├── feature_names.pkl          (52 feature names)
+│   │   ├── feature_importance.csv
+│   │   └── test_predictions.csv
+│   ├── final_results/
+│   │   ├── condition_effectiveness.csv
+│   │   ├── example_predictions.csv
+│   │   ├── summary_statistics.csv
+│   │   ├── top_conditions.csv
+│   │   ├── top_drugs.csv
+│   │   ├── top_drugs_stats.csv        (NEW - created to fix KeyError)
+│   │   └── top_features.csv
+│   ├── metrics/
+│   └── plots/
+│
+├── docs/
+├── src/
+└── requirements.txt                    (22 lines)
+
+Total Files: 42
+Total Directories: 16
+
+
+================================================================================
+3. DASHBOARD CODE ANALYSIS
+================================================================================
+
+The dashboard has 5 pages implemented in dashboard.py (503 lines):
+
+PAGE 1: HOME (show_home, lines 71-108)
+Status: ✓ WORKS
+- Displays overview metrics
+- Shows total reviews, medications, conditions, average rating
+- No bugs identified
+
+PAGE 2: PREDICTIONS (show_predictions, lines 110-193)
+Status: ✗ BROKEN - CRITICAL BUG #2
+- User inputs: drug, condition, rating, usefulness, year, review text
+- Model is loaded but NOT USED
+- Uses fake rule-based system (if rating >= 8...)
+- Ignores: drug name, condition, review text, all other features
+- Shows "similar cases" from dataset (this part works)
+
+Bug Details:
+    Line 115: model, feature_names = load_model()  # Model loaded ✓
+    Lines 151-163: FAKE LOGIC instead of model.predict()
+    
+What It Does:
+    rating >= 8  → "High" effectiveness, 85% confidence
+    rating >= 5  → "Medium" effectiveness, 70% confidence
+    rating < 5   → "Low" effectiveness, 80% confidence
+
+What It Should Do:
+    1. Create feature vector with 52 features
+    2. Call model.predict(features)
+    3. Get probabilities with model.predict_proba(features)
+    4. Return actual model prediction
+
+PAGE 3: MODEL PERFORMANCE (show_model_performance, lines 195-278)
+Status: ✗ BROKEN - CRITICAL BUGS #3 & #4
+- Lines 211-217: Fake accuracy metrics (87.3%, 85.6%, 86.4%)
+- Lines 225-231: Fake classification report
+- Lines 244-248: Fake confusion matrix
+- Lines 264-278: Feature importance visualization (WORKS, uses real data)
+
+PAGE 4: DATA INSIGHTS (show_insights, lines 280-391)
+Status: ✓ WORKS
+- Top medications chart
+- Rating distribution histogram
+- Top conditions chart
+- Yearly trends
+- Condition-specific effectiveness
+- All visualizations work correctly
+
+PAGE 5: ABOUT (show_about, lines 393-456)
+Status: ⚠ MINOR ISSUE
+- Line 422: Claims "Performance: 87.3% accuracy" (should be 71.92%)
+- Otherwise informative and well-written
+
+
+SIDEBAR (lines 462-488)
+Status: ⚠ MINOR ISSUE
+- Line 482: Displays "Model Accuracy: 87.3%" (should be 71.92%)
+
+
+================================================================================
+4. PREDICTION LOGIC ANALYSIS
+================================================================================
+
+WHAT IT CLAIMS TO DO:
+"This interactive dashboard provides comprehensive tools for analyzing and 
+predicting pain medication effectiveness based on patient reviews and 
+medication data. The system uses machine learning to help inform treatment 
+insights."
+
+WHAT IT ACTUALLY DOES:
+Uses a simple rule-based system that only looks at the rating value:
+
+    def predict_effectiveness(rating):
+        if rating >= 8:
+            return "High", 0.85
+        elif rating >= 5:
+            return "Medium", 0.70
+        else:
+            return "Low", 0.80
+
+WHAT IT SHOULD DO:
+Use the trained Random Forest model with 52 features:
+
+    def predict_effectiveness_CORRECT(drug, condition, rating, review, 
+                                      useful_count, year):
+        # 1. Create feature vector
+        features = create_feature_vector(
+            drug_name=drug,
+            condition=condition,
+            rating=rating,
+            usefulCount=useful_count,
+            year=year,
+            review_length=len(review),
+            review_word_count=len(review.split()),
+            # ... + one-hot encoded drug features (31 features)
+            # ... + one-hot encoded condition features (13 features)
+            # ... + text features (5 features)
+        )
+        
+        # 2. Get prediction from model
+        prediction = model.predict([features])[0]
+        probabilities = model.predict_proba([features])[0]
+        
+        # 3. Map to effectiveness level
+        effectiveness_map = {
+            0: "Not Effective",
+            1: "Partially Effective", 
+            2: "Effective"
+        }
+        
+        # 4. Return result
+        effectiveness = effectiveness_map[prediction]
+        confidence = probabilities[prediction]
+        
+        return effectiveness, confidence
+
+
+USER INPUTS COLLECTED BUT IGNORED:
+- selected_drug (line 131) - NOT USED
+- selected_condition (line 132) - NOT USED
+- useful_count (line 134) - NOT USED
+- year (line 137) - NOT USED
+- review_text (line 138-140) - NOT USED
+- review_length (line 141) - NOT USED
+- review_word_count (line 142) - NOT USED
+
+ONLY INPUT ACTUALLY USED:
+- rating (line 133) - ONLY THIS IS USED in the if/else logic
+
+
+================================================================================
+5. MODEL DETAILS
+================================================================================
+
+ALGORITHM: Random Forest Classifier
+Parameters:
+- n_estimators: 100 (number of trees)
+- random_state: 42 (for reproducibility)
+- Default scikit-learn hyperparameters
+
+INPUT FEATURES: 52 total features
+Breakdown:
+1. Numerical Features (8):
+   - rating (1-10 scale)
+   - usefulCount (review usefulness count)
+   - year (2008-2017)
+   - review_length (character count)
+   - review_word_count (word count)
+   - review_avg_word_length
+   - review_sentiment_polarity
+   - review_sentiment_subjectivity
+
+2. One-Hot Encoded Drug Features (31):
+   - drug_Acetaminophen
+   - drug_Acetaminophen / aspirin / caffeine
+   - drug_Acetaminophen / butalbital
+   - drug_Acetaminophen / butalbital / caffeine
+   - drug_Acetaminophen / butalbital / caffeine / codeine
+   - drug_Acetaminophen / caffeine / isometheptene mucate
+   - drug_Acetaminophen / dichloralphenazone / isometheptene mucate
+   - drug_Acetaminophen / diphenhydramine
+   - ... (31 total drug features)
+
+3. One-Hot Encoded Condition Features (13):
+   - condition_back pain
+   - condition_chronic pain
+   - condition_fibromyalgia
+   - condition_headache
+   - condition_migraine
+   - condition_muscle pain
+   - condition_osteoarthritis
+   - condition_rheumatoid arthritis
+   - condition_sciatica
+   - ... (13 total condition features)
+
+4. Categorical Flags (2):
+   - drugName_top (boolean - is drug in top N?)
+   - condition_top (boolean - is condition in top N?)
+
+TARGET VARIABLE: effectiveness_encoded
+Values:
+- 0 = Not Effective (ratings 1-4)
+- 1 = Partially Effective (ratings 5-7)
+- 2 = Effective (ratings 8-10)
+
+TRAIN/TEST SPLIT:
+- Total samples: 2,975
+- Training set: 2,380 samples (80%)
+- Test set: 595 samples (20%)
+- Random state: 42
+
+
+================================================================================
+6. ACTUAL MODEL PERFORMANCE
+================================================================================
+
+*** FROM EXECUTED NOTEBOOK: 05_modeling_executed.ipynb ***
+
+TRAINING PERFORMANCE:
+- Training Accuracy: 77.96%
+
+TEST PERFORMANCE:
+- Test Accuracy: 71.92% (NOT 87.3% as shown in dashboard)
+- Test Precision (weighted): 59.61% (NOT 85.6%)
+- Test Recall (weighted): 71.92%
+- Test F1-Score (weighted): 63.63% (NOT 86.4%)
+
+PER-CLASS BREAKDOWN (Test Set):
++------------------------+-----------+--------+----------+---------+
+| Class                  | Precision | Recall | F1-Score | Support |
++------------------------+-----------+--------+----------+---------+
+| Not Effective (0)      |   0.37    |  0.12  |   0.18   |   82    |
+| Partially Effective(1) |   0.00    |  0.00  |   0.00   |   55    |
+| Effective (2)          |   0.74    |  0.97  |   0.84   |  358    |
++------------------------+-----------+--------+----------+---------+
+| Accuracy               |           |        |   0.72   |  495    |
+| Macro Average          |   0.37    |  0.36  |   0.34   |  495    |
+| Weighted Average       |   0.60    |  0.72  |   0.64   |  495    |
++------------------------+-----------+--------+----------+---------+
+
+ACTUAL CONFUSION MATRIX (Test Set):
+                   Predicted
+                   0    1    2
+Actual    0  [    10   72    0  ]  Not Effective
+          1  [     0    0   55  ]  Partially Effective
+          2  [     1   10  347  ]  Effective
+
+Interpretation:
+- Class 0 (Not Effective): Model struggles, only 12% recall
+  - Of 82 actual "Not Effective" cases, only 10 predicted correctly
+  - 72 misclassified as "Partially Effective"
+
+- Class 1 (Partially Effective): COMPLETE FAILURE, 0% for all metrics
+  - Of 55 actual "Partially Effective" cases, ZERO predicted correctly
+  - All 55 misclassified as "Effective"
+  - Model cannot identify this class at all
+
+- Class 2 (Effective): Works well, 97% recall, 74% precision
+  - Of 358 actual "Effective" cases, 347 predicted correctly
+  - Only 11 misclassifications total
+
+OVERALL ASSESSMENT:
+✓ Good at identifying "Effective" medications (class 2)
+✗ Poor at identifying "Not Effective" medications (class 0)
+✗ CANNOT identify "Partially Effective" at all (class 1)
+⚠ Model has severe class imbalance issues
+
+
+================================================================================
+7. DATA STRUCTURE
+================================================================================
+
+FILE: pain_meds_cleaned.csv
+Size: 968 KB
+Rows: 2,975 (2,976 with header)
+Columns: 8
+
+Column Descriptions:
+1. uniqueID        - Unique identifier for each review
+2. drugName        - Name of pain medication (49 unique drugs)
+3. condition       - Pain condition being treated (varies)
+4. review          - Patient review text (HTML encoded)
+5. rating          - Patient rating (1-10 scale)
+6. date            - Review date (format: DD-Mon-YY)
+7. usefulCount     - Number of users who found review useful
+8. year            - Extracted year (2008-2017)
+
+Sample Row:
+uniqueID: 189138
+drugName: Oxycodone
+condition: chronic pain
+review: "I've been taking oxycodone for roughly 5 years..."
+rating: 8
+date: 18-Dec-16
+usefulCount: 24
+year: 2016
+
+
+FILE: pain_meds_ml_ready.csv
+Size: 2.0 MB
+Rows: 2,975 (2,976 with header)
+Columns: 61
+
+Additional Columns (beyond the 8 from cleaned data):
+9. effectiveness           - Text label (Effective/Partially Effective/Not Effective)
+10. effectiveness_encoded  - Numeric target (0/1/2)
+11. drugName_top          - Boolean flag
+12. condition_top         - Boolean flag
+13-43. drug_*             - 31 one-hot encoded drug features
+44-56. condition_*        - 13 one-hot encoded condition features
+57-61. Text features      - 5 features (length, word count, sentiment, etc.)
+
+Feature Engineering Applied:
+- Text length and word count extraction
+- Sentiment analysis (polarity and subjectivity)
+- One-hot encoding for categorical variables
+- Top drug/condition identification
+- Effectiveness categorization based on rating
+
+
+EFFECTIVENESS DISTRIBUTION (all 2,975 records):
+Class                    Count    Percentage
+Effective (2)            2,381    80.0%
+Not Effective (0)          333    11.2%
+Partially Effective (1)    261     8.8%
+
+Total: 2,975 records
+
+RATING STATISTICS:
+Mean: ~7.3
+Median: 8.0
+Mode: 10
+Range: 1-10
+
+TOP 5 MEDICATIONS (by average rating):
+1. Tylenol with Codeine #4                              10.0 (1 review)
+2. Acetaminophen / caffeine / magnesium salicylate      10.0 (2 reviews)
+3. Acetaminophen / aspirin / caffeine / salicylamide    10.0 (3 reviews)
+4. Acetaminophen / phenylephrine                        10.0 (1 review)
+5. Acetaminophen / phenyltoloxamine                     9.71 (7 reviews)
+
+TOP PAIN CONDITIONS:
+1. back pain
+2. chronic pain
+3. migraine
+4. headache
+5. fibromyalgia
+6. osteoarthritis
+7. rheumatoid arthritis
+8. sciatica
+
+
+================================================================================
+8. REQUIREMENTS.TXT
+================================================================================
+
+File: project/requirements.txt
+Lines: 22
+
+Package List:
+# Core Data Science Libraries
+pandas>=2.0.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+scikit-learn>=1.3.0
+
+# NLP Libraries
+nltk>=3.8.0
+
+# Web Dashboard
+streamlit>=1.28.0
+plotly>=5.18.0
+
+# Jupyter Notebook
+jupyter>=1.0.0
+notebook>=7.0.0
+ipykernel>=6.25.0
+
+# Utilities
+python-dateutil>=2.8.0
+pytz>=2023.3
+
+Python Version: 3.14 (as stated in dashboard about page)
+
+
+================================================================================
+9. COMPLETE BUG LIST
+================================================================================
+
+CRITICAL BUGS (Must Fix Immediately):
+
+BUG #1: Fake Accuracy Metrics in Dashboard
+File: project/app/dashboard.py
+Lines: 211-217
+Severity: CRITICAL
+Impact: Misleads users about model performance
+Current: Shows 87.3% accuracy
+Actual: Model has 71.92% accuracy
+Fix: Load actual metrics from saved model results or calculate from 
+     test_predictions.csv
+
+BUG #2: Predictions Don't Use ML Model
+File: project/app/dashboard.py
+Lines: 151-163
+Severity: CRITICAL
+Impact: Entire prediction feature is fake, defeats purpose of ML project
+Current: if/else based only on rating value
+Fix: 
+  1. Create feature vector from user inputs (52 features)
+  2. Use model.predict() and model.predict_proba()
+  3. Return actual model prediction and confidence
+
+BUG #3: Fake Confusion Matrix
+File: project/app/dashboard.py
+Lines: 244-248
+Severity: CRITICAL
+Impact: Completely fabricated visualization, misleads about model behavior
+Current: Hardcoded np.array with fake values
+Fix: Calculate actual confusion matrix from test predictions or load 
+     from saved results
+
+BUG #4: Fake Classification Report
+File: project/app/dashboard.py
+Lines: 225-231
+Severity: CRITICAL
+Impact: Shows fake per-class metrics
+Current: Fabricated dictionary with made-up precision/recall/F1
+Fix: Use sklearn.metrics.classification_report on actual test predictions
+
+
+MODERATE ISSUES:
+
+ISSUE #1: Severe Class Imbalance
+Severity: MODERATE
+Impact: Model cannot predict "Partially Effective" class
+Current: Class 1 has 0% precision, recall, F1-score
+Fix Options:
+  1. Collect more data for underrepresented classes
+  2. Use SMOTE or other oversampling techniques
+  3. Adjust class weights in Random Forest
+  4. Combine classes (binary classification: Effective vs Not Effective)
+  5. Try different algorithms (XGBoost with scale_pos_weight)
+
+
+MINOR ISSUES:
+
+ISSUE #1: Documentation Claims Wrong Accuracy
+File: project/app/dashboard.py
+Lines: 422, 482
+Severity: MINOR
+Impact: Inconsistent documentation
+Current: Claims 87.3% accuracy in about page and sidebar
+Fix: Change to 71.92% or remove specific number
+
+
+================================================================================
+10. SUMMARY
+================================================================================
+
+WHAT WORKS:
+✓ Data collection and cleaning pipeline (notebooks 01-02)
+✓ Exploratory data analysis (notebook 03)
+✓ Feature engineering (notebook 04)
+✓ Model training and evaluation (notebook 05)
+✓ Final analysis and visualizations (notebook 06)
+✓ Model saved correctly (rf_model.pkl, feature_names.pkl)
+✓ Dashboard Home page - displays correct data statistics
+✓ Dashboard Data Insights page - all visualizations work
+✓ Dashboard file loading (CSVs and pickle files)
+✓ Feature importance visualization
+✓ Similar cases lookup functionality
+
+
+WHAT'S BROKEN:
+✗ Dashboard prediction functionality - doesn't use ML model at all
+✗ Dashboard performance metrics - all hardcoded fake values
+✗ Dashboard confusion matrix - completely fabricated
+✗ Dashboard classification report - made-up numbers
+✗ Model cannot predict "Partially Effective" class (0% all metrics)
+
+
+ROOT CAUSE ANALYSIS:
+
+The dashboard appears to be a template or prototype that was:
+1. Created with placeholder/demo values for metrics
+2. Given a simplified prediction logic for testing UI
+3. Never updated to use actual model predictions and real metrics
+4. The ML model was properly trained in Jupyter notebooks
+5. But integration between model and dashboard was never completed
+
+
+HOW TO FIX IT:
+
+PRIORITY 1 - Fix Prediction Logic (Bug #2):
+1. In show_predictions() function (line 144 onwards):
+   
+   # Remove lines 151-163 (fake rule-based logic)
+   
+   # Add proper feature engineering:
+   from sklearn.preprocessing import OneHotEncoder
+   import pickle
+   
+   # Create feature vector matching training data
+   feature_dict = {
+       'rating': rating,
+       'usefulCount': useful_count,
+       'year': year,
+       'review_length': review_length,
+       'review_word_count': review_word_count,
+       # ... add text features (sentiment, etc.)
+       # ... add one-hot encoded drug features
+       # ... add one-hot encoded condition features
+   }
+   
+   # Convert to array matching model's expected input
+   feature_vector = create_feature_array(feature_dict, feature_names)
+   
+   # Get prediction
+   prediction = model.predict([feature_vector])[0]
+   probabilities = model.predict_proba([feature_vector])[0]
+   
+   # Map to labels
+   effectiveness_map = {0: "Low", 1: "Medium", 2: "High"}
+   effectiveness = effectiveness_map[prediction]
+   confidence = probabilities[prediction]
+
+2. Create helper function to build feature vector from user inputs
+
+
+PRIORITY 2 - Fix Performance Metrics (Bug #1):
+1. Load actual test predictions:
+   test_preds = pd.read_csv(MODELS_DIR / "test_predictions.csv")
+
+2. Calculate real metrics:
+   from sklearn.metrics import accuracy_score, precision_score, f1_score
+   
+   accuracy = accuracy_score(test_preds['actual'], test_preds['predicted'])
+   precision = precision_score(test_preds['actual'], test_preds['predicted'], 
+                               average='weighted')
+   f1 = f1_score(test_preds['actual'], test_preds['predicted'], 
+                 average='weighted')
+
+3. Replace lines 211-217 with actual calculated values
+
+
+PRIORITY 3 - Fix Confusion Matrix (Bug #3):
+1. Calculate actual confusion matrix:
+   from sklearn.metrics import confusion_matrix
+   
+   cm = confusion_matrix(test_preds['actual'], test_preds['predicted'])
+
+2. Replace lines 244-248 with calculated cm
+
+
+PRIORITY 4 - Fix Classification Report (Bug #4):
+1. Calculate actual per-class metrics:
+   from sklearn.metrics import classification_report
+   
+   report = classification_report(test_preds['actual'], 
+                                  test_preds['predicted'],
+                                  output_dict=True)
+
+2. Replace lines 225-231 with actual report data
+
+
+PRIORITY 5 - Address Class Imbalance (Issue #1):
+Consider one of these approaches:
+a) Retrain with class weights:
+   model = RandomForestClassifier(class_weight='balanced')
+
+b) Use SMOTE for oversampling minority classes
+
+c) Simplify to binary classification (Effective vs Not Effective)
+
+d) Collect more data for underrepresented classes
+
+
+PRIORITY 6 - Update Documentation:
+1. Change accuracy claims from 87.3% to 71.92%
+2. Add disclaimer about class imbalance issues
+3. Document limitations of current model
+
+
+TESTING CHECKLIST:
+□ Verify predictions use actual model
+□ Test with different drug/condition combinations
+□ Verify metrics match notebook results
+□ Check confusion matrix matches actual data
+□ Test edge cases (unknown drugs, rare conditions)
+□ Validate feature vector has exactly 52 features
+□ Ensure probabilities sum to 1.0
+□ Check all visualizations render correctly
+
+
+ESTIMATED TIME TO FIX:
+- Priority 1 (Predictions): 4-6 hours
+- Priority 2 (Metrics): 1-2 hours
+- Priority 3 (Confusion Matrix): 30 minutes
+- Priority 4 (Classification Report): 30 minutes
+- Priority 5 (Class Imbalance): 3-5 hours
+- Priority 6 (Documentation): 30 minutes
+Total: 10-15 hours
+
+
+FINAL RECOMMENDATION:
+This project has a solid foundation:
+- Good data pipeline
+- Proper feature engineering
+- Well-executed modeling in notebooks
+- Professional dashboard structure
+
+However, the dashboard is currently showing fake metrics and not using the 
+actual ML model for predictions. These are critical issues that must be 
+fixed before this can be considered a functional ML application.
+
+The fixes are straightforward and mostly involve connecting the already-
+trained model to the dashboard interface. Once fixed, this will be a 
+complete end-to-end ML project.
+
+
+================================================================================
+END OF REPORT
+================================================================================
+Total Lines: 1063
+Generated: April 4, 2026
+Analysis Complete
