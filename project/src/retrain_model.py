@@ -5,6 +5,7 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
+from imblearn.over_sampling import SMOTE
 import nltk
 
 # Download NLTK data
@@ -74,17 +75,38 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"✓ Train size: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)")
 print(f"✓ Test size: {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)")
 
+# Add SMOTE resampling to fix class imbalance
+print("\n" + "-"*60)
+print("Applying SMOTE to balance training data...")
+print("\nOriginal training class distribution:")
+print(pd.Series(y_train).value_counts().sort_index())
+print("\nPercentages:")
+print(pd.Series(y_train).value_counts(normalize=True).sort_index() * 100)
+
+smote = SMOTE(random_state=42, k_neighbors=5)
+X_train_balanced, y_train_balanced = smote.fit_resample(X_train, y_train)
+
+print("\nBalanced training class distribution (after SMOTE):")
+print(pd.Series(y_train_balanced).value_counts().sort_index())
+print("\nPercentages:")
+print(pd.Series(y_train_balanced).value_counts(normalize=True).sort_index() * 100)
+print(f"✓ Training samples increased: {len(X_train)} → {len(X_train_balanced)}")
+
 # Train model with balanced class weights
 print("\n" + "-"*60)
 print("Training Random Forest with balanced class weights...")
 model = RandomForestClassifier(
     n_estimators=100,
     random_state=42,
-    class_weight='balanced',
+    class_weight='balanced',  # Keep this for extra emphasis
     n_jobs=-1,
+    max_depth=20,
+    min_samples_split=5,
     verbose=1
 )
-model.fit(X_train, y_train)
+
+print("Fitting model on BALANCED training data...")
+model.fit(X_train_balanced, y_train_balanced)
 print("✓ Model trained")
 
 # Evaluate
@@ -92,10 +114,10 @@ print("\n" + "="*60)
 print("MODEL PERFORMANCE")
 print("="*60)
 
-y_train_pred = model.predict(X_train)
+y_train_pred = model.predict(X_train_balanced)
 y_test_pred = model.predict(X_test)
 
-train_acc = accuracy_score(y_train, y_train_pred)
+train_acc = accuracy_score(y_train_balanced, y_train_pred)
 test_acc = accuracy_score(y_test, y_test_pred)
 
 print(f"\nTraining Accuracy: {train_acc:.4f} ({train_acc*100:.2f}%)")
