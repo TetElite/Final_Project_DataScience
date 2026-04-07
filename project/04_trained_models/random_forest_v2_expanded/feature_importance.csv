@@ -1,0 +1,57 @@
+feature,importance
+usefulCount,0.0999742312466167
+compound,0.08388306302769388
+review_length,0.07898324320180959
+pos,0.0739698544601912
+review_word_count,0.07317053212192531
+avg_word_length,0.06753437229626447
+neg,0.06636019081884224
+neu,0.06033841379778701
+year,0.05746388416957106
+has_positive_keywords,0.046412926377276016
+condition_other,0.025905386555822266
+condition_chronic pain,0.019001617345349733
+condition_back pain,0.018813480433349104
+drug_Naproxen,0.01600075950557544
+drug_Tramadol,0.01581085398577348
+has_negative_keywords,0.014953670341758856
+condition_osteoarthritis,0.012430965637569548
+condition_rheumatoid arthritis,0.012036418968979265
+drug_Lyrica,0.011920323102633724
+condition_sciatica,0.010543248541968177
+drug_Duloxetine,0.010069949586271842
+drug_Cymbalta,0.009105135060388443
+drug_Oxycodone,0.00854116604995124
+drug_Acetaminophen / hydrocodone,0.008284557308924747
+drug_Meloxicam,0.007498197235925332
+condition_headache,0.007072483366448524
+drug_Diclofenac,0.006976803127539224
+condition_migraine,0.006455843004498657
+drug_Pregabalin,0.006090182943450866
+drug_Aleve,0.00606627606168601
+drug_Other,0.005803376950553406
+drug_Gabapentin,0.005371790588316703
+drug_Acetaminophen / oxycodone,0.004629973734376107
+drug_Acetaminophen / aspirin / caffeine,0.004518675875093058
+drug_Ibuprofen,0.004486355881303754
+drug_Celebrex,0.004294564155041055
+drug_Acetaminophen / dichloralphenazone / isometheptene mucate,0.004187427725232823
+condition_muscle pain,0.004074485839923478
+drug_Acetaminophen / butalbital / caffeine,0.003917260000919698
+condition_juvenile rheumatoid arthritis,0.0026885723467938126
+drug_Diclofenac / misoprostol,0.0022176666175421373
+drug_Aspirin / butalbital / caffeine,0.0020798324724119184
+drug_Indomethacin,0.0020412194954207334
+drug_Naproxen / sumatriptan,0.0018032188228768345
+drug_Advil,0.0011230271880061067
+drug_Acetaminophen / butalbital,0.0009973909727034993
+drug_Esomeprazole / naproxen,0.0009440681931453885
+drug_Acetaminophen / pamabrom,0.0007109881411806082
+drug_Acetaminophen / butalbital / caffeine / codeine,0.0006172925417048938
+drug_Aspirin,0.0005535628625620668
+condition_neck pain,0.00044639735571513667
+condition_cluster headaches,0.00040704925126161485
+drug_Aspirin / butalbital / caffeine / codeine,0.00028223985727877953
+drug_Neurontin,0.00011629341198102286
+condition_toothache,1.9240036813401057e-05
+condition_spondyloarthritis,0.0

@@ -1,0 +1,90 @@
+╔═══════════════════════════════════════════════════════════════════════╗
+║         PAIN MEDICATION DATASET EXPANSION - QUICK COMPARISON          ║
+╔═══════════════════════════════════════════════════════════════════════╗
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ DATASET SIZE COMPARISON                                             │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Original Dataset:        2,473 reviews  ████████████████░░░░░░    │
+│  Expanded Dataset:        3,184 reviews  ████████████████████████  │
+│                                                                     │
+│  ➜ Increase:              +711 reviews (28.8% growth)               │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ MEDICATION COUNT                                                    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Original Medications:    15 terms                                  │
+│  NEW Nerve Pain Meds:     +6 terms  (gabapentin, pregabalin, etc.) │
+│  NEW Paracetamol Brands:  +3 terms  (panadol, paracetamol, calpol) │
+│                                                                     │
+│  ➜ Total Medications:     24 terms                                  │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ NERVE PAIN MEDICATION BREAKDOWN                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ✓ Gabapentin        160 reviews  ██████████████░░░░░░  (22.5%)    │
+│  ✓ Pregabalin        142 reviews  ████████████░░░░░░░░  (20.0%)    │
+│  ✓ Duloxetine        141 reviews  ████████████░░░░░░░░  (19.8%)    │
+│  ✓ Cymbalta          129 reviews  ███████████░░░░░░░░░  (18.1%)    │
+│  ✓ Lyrica            123 reviews  ██████████░░░░░░░░░░  (17.3%)    │
+│  ✓ Neurontin          16 reviews  █░░░░░░░░░░░░░░░░░░░  ( 2.3%)    │
+│                                                                     │
+│  ➜ Total New Reviews: 711                                           │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ TOP CONDITIONS IN EXPANDED DATASET                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  1. Chronic Pain          699 reviews  (22.0%)                      │
+│  2. Back Pain             570 reviews  (17.9%)                      │
+│  3. Osteoarthritis        458 reviews  (14.4%)                      │
+│  4. Headache              403 reviews  (12.7%)                      │
+│  5. Migraine              374 reviews  (11.7%)                      │
+│  6. Neuropathic Pain ⭐   333 reviews  (10.5%)  [SIGNIFICANTLY UP]  │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ NEUROPATHIC PAIN MEDICATION DOMINANCE                               │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  For "Neuropathic Pain" condition (333 total reviews):              │
+│                                                                     │
+│  1. Pregabalin           131 reviews  ███████████████████  (39.3%)  │
+│  2. Lyrica               118 reviews  █████████████████░  (35.4%)   │
+│  3. Gabapentin            84 reviews  ████████████░░░░░░  (25.2%)   │
+│                                                                     │
+│  ➜ These 3 medications account for 100% of neuropathic pain meds    │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ KEY ACHIEVEMENTS                                                    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ✅ 28.8% increase in dataset size                                  │
+│  ✅ 3 of top 10 medications are now nerve pain meds                 │
+│  ✅ Comprehensive neuropathic pain coverage (333 reviews)           │
+│  ✅ Better chronic pain medication diversity                        │
+│  ✅ Gabapentinoids and SNRIs now represented                        │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+╔═══════════════════════════════════════════════════════════════════════╗
+║  FILES CREATED                                                        ║
+╠═══════════════════════════════════════════════════════════════════════╣
+║  📄 expand_pain_meds.py                    [Filtering Script]         ║
+║  📊 pain_meds_filtered_expanded.csv        [3,184 records, 1.3 MB]    ║
+║  📋 EXPANSION_SUMMARY.md                   [Detailed Analysis]        ║
+║  📝 QUICK_COMPARISON.txt                   [This File]                ║
+╚═══════════════════════════════════════════════════════════════════════╝
+
