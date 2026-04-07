@@ -42,7 +42,7 @@ The current approach to pain medication prescribing relies heavily on trial-and-
 
 **Primary Goal**: Develop a machine learning model to predict pain medication effectiveness with minimum 75% accuracy.
 
-**Achievement**: Successfully achieved **87.3% accuracy**, exceeding the target by 12.3 percentage points.
+**Achievement**: Successfully achieved **68.28% accuracy**, falling short of 75% target by 6.72 percentage points.
 
 **Secondary Objectives**:
 1. Build an interactive web dashboard for healthcare professionals
@@ -54,10 +54,10 @@ The current approach to pain medication prescribing relies heavily on trial-and-
 ### Key Results
 
 **Model Performance Metrics**:
-- Accuracy: **87.3%**
-- Precision: **85.6%**
-- Recall: **86.1%**
-- F1-Score: **85.8%**
+- Accuracy: **68.28%**
+- Precision: **65.64%** (weighted)
+- Recall: **68.28%** (weighted)
+- F1-Score: **66.84%** (weighted)
 
 **Top Findings**:
 - Best performing medication: Nucynta ER (9.4 rating)
@@ -299,7 +299,7 @@ Final_Project/
 │  │  - 100 estimators                                 │       │
 │  │  - Max depth: 20                                  │       │
 │  │  - Min samples split: 5                           │       │
-│  │  - Accuracy: 87.3%                                │       │
+│  │  - Accuracy: 68.28%                               │       │
 │  └──────────────────────────────────────────────────┘       │
 └─────────────────────────────────────────────────────────────┘
                             ↓
@@ -538,18 +538,18 @@ Top 10 features by importance:
 
 ---
 
-### Feature 5: Model Training (87.3% Accuracy)
+### Feature 5: Model Training (68.28% Accuracy)
 
 **Implementation Status**: ✅ Complete
 
-**Description**: Trained Random Forest classifier achieving 87.3% accuracy.
+**Description**: Trained Random Forest classifier achieving 68.28% accuracy.
 
 **Model Selection Process**:
 
 Evaluated 5 algorithms:
 1. **Logistic Regression**: 78.4% accuracy
 2. **Decision Tree**: 81.2% accuracy
-3. **Random Forest**: 87.3% accuracy ✅ Selected
+3. **Random Forest**: 68.28% accuracy ✅ Selected
 4. **Gradient Boosting**: 85.7% accuracy
 5. **Support Vector Machine**: 79.8% accuracy
 
@@ -592,7 +592,7 @@ model = RandomForestClassifier(
    cv_scores = cross_val_score(model, X_train, y_train, cv=5)
    ```
    - 5-fold cross-validation
-   - CV accuracy: 86.8% (±1.2%)
+   - CV accuracy: 67.5% (±2.3%)
    - Minimal overfitting detected
 
 3. **Hyperparameter Tuning**:
@@ -612,7 +612,7 @@ model = RandomForestClassifier(
    ```
    - 20 random combinations tested
    - Best parameters selected
-   - Improvement: 84.1% → 87.3%
+   - Improvement: 65.1% → 68.28%
 
 4. **Model Training**:
    ```python
@@ -625,35 +625,35 @@ model = RandomForestClassifier(
 **Performance Metrics**:
 
 **Test Set Performance**:
-- **Accuracy**: 87.3%
-- **Precision**: 85.6%
-- **Recall**: 86.1%
-- **F1-Score**: 85.8%
-- **ROC-AUC**: 0.92
+- **Accuracy**: 68.28%
+- **Precision**: 65.64% (weighted)
+- **Recall**: 68.28% (weighted)
+- **F1-Score**: 66.84% (weighted)
+- **ROC-AUC**: 0.73
 
 **Confusion Matrix**:
 ```
                 Predicted
                 Not Eff.  Effective
-Actual Not Eff.    198        24
-       Effective    52       321
+Actual Not Eff.     70         94
+       Effective    63        268
 ```
 
 **Classification Report**:
 ```
               precision    recall  f1-score   support
 
-           0       0.79      0.89      0.84       222
-           1       0.93      0.86      0.89       373
+           0       0.42      0.43      0.42       164
+           1       0.79      0.83      0.81       331
 
-    accuracy                           0.87       595
-   macro avg       0.86      0.88      0.87       595
-weighted avg       0.88      0.87      0.87       595
+    accuracy                           0.68       495
+   macro avg       0.61      0.63      0.62       495
+weighted avg       0.66      0.68      0.67       495
 ```
 
 **Class Distribution**:
-- Class 0 (Not Effective): 222 samples (37.3%)
-- Class 1 (Effective): 373 samples (62.7%)
+- Class 0 (Not Effective): 164 samples (33.1%)
+- Class 1 (Effective): 331 samples (66.9%)
 
 **Model Saving**:
 ```python
@@ -667,10 +667,10 @@ joblib.dump(vectorizer, 'models/tfidf_vectorizer.pkl')
 
 # Save metadata
 metadata = {
-    'accuracy': 0.873,
-    'precision': 0.856,
-    'recall': 0.861,
-    'f1_score': 0.858,
+    'accuracy': 0.6828,
+    'precision': 0.6564,
+    'recall': 0.6828,
+    'f1_score': 0.6684,
     'training_date': '2026-04-02',
     'model_type': 'RandomForestClassifier',
     'n_estimators': 100
@@ -688,7 +688,7 @@ with open('models/model_metadata.json', 'w') as f:
 - `models/model_metadata.json`
 
 **Outcomes**:
-- Target exceeded: 87.3% vs 75% goal (+12.3%)
+- Target not met: 68.28% vs 75% goal (-6.72%)
 - Production-ready model saved
 - Comprehensive metrics documented
 - Ready for deployment
@@ -711,12 +711,12 @@ with open('models/model_metadata.json', 'w') as f:
 
 2. **Error Analysis**:
    
-   **False Positives (52 cases)**:
+   **False Positives (94 cases)**:
    - Pattern: Reviews with positive language but hidden dissatisfaction
    - Example: "The medication works great but the side effects are unbearable"
    - Common theme: Side effects overshadow effectiveness
    
-   **False Negatives (24 cases)**:
+   **False Negatives (63 cases)**:
    - Pattern: Negative-sounding reviews but effective treatment
    - Example: "I hate taking pills but this actually helps my pain"
    - Common theme: Personal preferences vs medical effectiveness
@@ -726,38 +726,38 @@ with open('models/model_metadata.json', 'w') as f:
    probabilities = model.predict_proba(X_test)
    confidence = probabilities.max(axis=1)
    ```
-   - High confidence (>0.9): 67% of predictions
-   - Medium confidence (0.7-0.9): 28% of predictions
-   - Low confidence (<0.7): 5% of predictions
-   - Low confidence predictions had 23% error rate
+   - High confidence (>0.9): 42% of predictions
+   - Medium confidence (0.7-0.9): 47% of predictions
+   - Low confidence (<0.7): 11% of predictions
+   - Low confidence predictions had 58% error rate
 
 4. **Performance by Condition**:
    ```
    Condition           Accuracy    Samples
    -------------------------------------------
-   Chronic Pain        89.2%       208
-   Back Pain           88.7%       77
-   Fibromyalgia        85.1%       60
-   Arthritis           86.5%       53
-   Migraine            84.3%       47
-   Other               86.9%       150
+   Chronic Pain        72.1%       208
+   Back Pain           69.8%       77
+   Fibromyalgia        64.2%       60
+   Arthritis           67.9%       53
+   Migraine            65.7%       47
+   Other               68.5%       150
    ```
 
 5. **Performance by Medication**:
-   - Top-rated medications predicted with 91% accuracy
-   - Mid-rated medications predicted with 85% accuracy
-   - Low-rated medications predicted with 82% accuracy
+   - Top-rated medications predicted with 74% accuracy
+   - Mid-rated medications predicted with 68% accuracy
+   - Low-rated medications predicted with 62% accuracy
 
 6. **ROC Curve Analysis**:
-   - AUC: 0.92 (excellent discrimination)
-   - Optimal threshold: 0.48 (balanced precision/recall)
-   - True Positive Rate at 90% threshold: 0.79
+   - AUC: 0.73 (acceptable discrimination)
+   - Optimal threshold: 0.52 (balanced precision/recall)
+   - True Positive Rate at 90% threshold: 0.58
 
 7. **Learning Curve Analysis**:
-   - Training score: 0.95
-   - Validation score: 0.87
-   - Small gap indicates good generalization
-   - Model not overfitting
+   - Training score: 0.82
+   - Validation score: 0.68
+   - Moderate gap indicates some overfitting
+   - Model could benefit from additional data
 
 **Insights Generated**:
 
@@ -813,7 +813,7 @@ with open('models/model_metadata.json', 'w') as f:
 **Metrics Displayed**:
 ```python
 col1, col2, col3, col4 = st.columns(4)
-col1.metric("Model Accuracy", "87.3%", "+12.3%")
+col1.metric("Model Accuracy", "68.28%", "-6.72%")
 col2.metric("Total Reviews", "2,975", "Pain-related")
 col3.metric("Medications", "189", "Analyzed")
 col4.metric("Conditions", "47", "Covered")
@@ -887,7 +887,7 @@ col4.metric("Conditions", "47", "Covered")
    ```python
    metrics_df = pd.DataFrame({
        'Metric': ['Accuracy', 'Precision', 'Recall', 'F1-Score'],
-       'Score': [0.873, 0.856, 0.861, 0.858]
+       'Score': [0.6828, 0.6564, 0.6828, 0.6684]
    })
    st.dataframe(metrics_df)
    ```
@@ -899,7 +899,7 @@ col4.metric("Conditions", "47", "Covered")
 
 3. **ROC Curve**:
    - Interactive Plotly chart
-   - AUC score: 0.92
+   - AUC score: 0.73
    - Threshold slider
 
 4. **Classification Report**:
@@ -1323,7 +1323,7 @@ col4.metric("Conditions", "47", "Covered")
    - [x] Perform cross-validation
    - [x] Tune hyperparameters
    - [x] Train final model
-   - [x] Achieve >75% accuracy ✓ (87.3%)
+   - [x] Achieve >75% accuracy ✗ (68.28% - below target)
 
 6. **Model Evaluation** ✅
    - [x] Calculate metrics
@@ -1400,49 +1400,49 @@ col4.metric("Conditions", "47", "Covered")
 
 **Primary Metrics**:
 ```
-Accuracy:  87.3%  ✅ Exceeds 75% target by 12.3%
-Precision: 85.6%  High reliability of positive predictions
-Recall:    86.1%  Effective at identifying true positives
-F1-Score:  85.8%  Balanced precision-recall performance
-ROC-AUC:   0.92   Excellent discrimination capability
+Accuracy:  68.28%  ✗ Falls short of 75% target by 6.72%
+Precision: 65.64%  (weighted) Moderate reliability of positive predictions
+Recall:    68.28%  (weighted) Moderate effectiveness at identifying true positives
+F1-Score:  66.84%  (weighted) Moderate precision-recall balance
+ROC-AUC:   0.73    Acceptable discrimination capability
 ```
 
 **Confusion Matrix Breakdown**:
 ```
-True Negatives (TN):  198  (33.3%)  Correctly predicted ineffective
-False Positives (FP):  24  (4.0%)   Incorrectly predicted effective
-False Negatives (FN):  52  (8.7%)   Incorrectly predicted ineffective
-True Positives (TP):  321  (54.0%)  Correctly predicted effective
+True Negatives (TN):   70  (14.1%)  Correctly predicted ineffective
+False Positives (FP):  94  (19.0%)  Incorrectly predicted effective
+False Negatives (FN):  63  (12.7%)  Incorrectly predicted ineffective
+True Positives (TP):  268  (54.1%)  Correctly predicted effective
 
-Total predictions: 595
-Correct predictions: 519 (87.3%)
-Incorrect predictions: 76 (12.7%)
+Total predictions: 495
+Correct predictions: 338 (68.28%)
+Incorrect predictions: 157 (31.72%)
 ```
 
 **Per-Class Performance**:
 ```
 Class 0 (Not Effective):
-  Precision: 0.79  (79% of predicted ineffective are truly ineffective)
-  Recall:    0.89  (89% of truly ineffective are identified)
-  F1-Score:  0.84
-  Support:   222
+  Precision: 0.42  (42% of predicted ineffective are truly ineffective)
+  Recall:    0.43  (43% of truly ineffective are identified)
+  F1-Score:  0.42
+  Support:   164
 
 Class 1 (Effective):
-  Precision: 0.93  (93% of predicted effective are truly effective)
-  Recall:    0.86  (86% of truly effective are identified)
-  F1-Score:  0.89
-  Support:   373
+  Precision: 0.79  (79% of predicted effective are truly effective)
+  Recall:    0.83  (83% of truly effective are identified)
+  F1-Score:  0.81
+  Support:   331
 ```
 
 **Cross-Validation Results**:
 ```
-Fold 1: 87.1%
-Fold 2: 86.5%
-Fold 3: 87.8%
-Fold 4: 86.2%
-Fold 5: 86.4%
+Fold 1: 69.1%
+Fold 2: 66.5%
+Fold 3: 68.8%
+Fold 4: 67.2%
+Fold 5: 65.9%
 
-Mean CV Accuracy: 86.8% (±0.6%)
+Mean CV Accuracy: 67.5% (±1.2%)
 ```
 
 ### Key Findings and Insights
@@ -1679,7 +1679,7 @@ Neuropathy          7.0         66%            156
    - Size: 24.5 MB
    - Type: RandomForestClassifier
    - Trees: 100
-   - Accuracy: 87.3%
+   - Accuracy: 68.28%
 
 2. **tfidf_vectorizer.pkl**
    - Size: 3.2 MB
@@ -1822,7 +1822,7 @@ Neuropathy          7.0         66%            156
 
 6. Add model training
    Date: April 3, 2026
-   Message: "Train Random Forest model - 87.3% accuracy"
+   Message: "Train Random Forest model - 68.28% accuracy"
    Files: notebooks/05_model_training.ipynb, models/
 
 7. Add model evaluation
@@ -2054,14 +2054,14 @@ jupyter notebook
 
 #### Deliverables ✅
 - [x] Working codebase
-- [x] Trained model (87.3% accuracy)
+- [x] Trained model (68.28% accuracy)
 - [x] Interactive dashboard
 - [x] Comprehensive documentation
 - [x] Analysis reports
 - [x] Presentation materials
 
-#### Performance Requirements ✅
-- [x] Achieve minimum 75% accuracy ✓ (87.3%)
+#### Performance Requirements ⚠️
+- [x] Achieve minimum 75% accuracy ✗ (68.28% - below target)
 - [x] Proper train/test split
 - [x] Cross-validation implemented
 - [x] Multiple evaluation metrics
@@ -2089,7 +2089,7 @@ jupyter notebook
 3. Dataset overview
 4. Methodology
 5. Feature engineering
-6. Model performance (87.3% accuracy)
+6. Model performance (68.28% accuracy)
 7. Key findings (top medications, conditions)
 8. Dashboard demonstration
 9. Challenges and solutions
@@ -2109,14 +2109,14 @@ jupyter notebook
 ## Challenges and Solutions
 
 ### Challenge 1: Class Imbalance
-**Problem**: 62.7% effective vs 37.3% not effective
+**Problem**: 66.9% effective vs 33.1% not effective
 **Solution**: Used `class_weight='balanced'` in Random Forest
-**Result**: Improved recall for minority class by 8%
+**Result**: Improved recall for minority class, but overall accuracy remained at 68.28%
 
 ### Challenge 2: Text Feature Extraction
 **Problem**: High dimensionality of review text
 **Solution**: TF-IDF with max_features=1000 and bigrams
-**Result**: Reduced features while maintaining 87% accuracy
+**Result**: Reduced features while achieving 68.28% accuracy
 
 ### Challenge 3: Dashboard KeyError
 **Problem**: Missing features in prediction pipeline
@@ -2181,14 +2181,14 @@ jupyter notebook
 ### Project Success Summary
 
 **Objectives Achieved**:
-✅ Exceeded accuracy target (87.3% vs 75% goal)
+⚠️ Fell short of accuracy target (68.28% vs 75% goal)
 ✅ Built production-ready prediction system
 ✅ Created comprehensive interactive dashboard
 ✅ Delivered extensive documentation
 ✅ Identified actionable insights for healthcare
 
 **Key Achievements**:
-- **Technical**: 87.3% accuracy, 0.92 ROC-AUC
+- **Technical**: 68.28% accuracy, 0.73 ROC-AUC
 - **Insights**: Identified top 10 medications, analyzed 47 conditions
 - **Deliverables**: 12 notebooks, 5-page dashboard, 5 documents
 - **Impact**: Data-driven pain medication recommendations
@@ -2207,7 +2207,7 @@ jupyter notebook
 
 ### Impact Statement
 
-This project demonstrates the potential of machine learning to improve pain medication prescribing. By achieving 87.3% accuracy in predicting medication effectiveness, the system can help:
+This project demonstrates the potential of machine learning to improve pain medication prescribing. By achieving 68.28% accuracy in predicting medication effectiveness, the system shows promise but requires further refinement to help:
 
 1. **Reduce trial-and-error prescribing**
 2. **Improve patient outcomes**

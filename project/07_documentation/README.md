@@ -59,12 +59,12 @@ Build a **machine learning classification model** that predicts whether a specif
 
 | Metric | Target | Achieved ✓ |
 |--------|--------|------------|
-| **Model Accuracy** | 75%+ | **87.3%** |
+| **Model Accuracy** | 75%+ | **68.28%** |
 | **Data Quality** | Clean & Filtered | ✓ 2,975 records |
 | **Interactive Dashboard** | Full-featured | ✓ 5-page Streamlit app |
 | **Documentation** | Comprehensive | ✓ Complete notebooks |
 
-**Result:** Successfully exceeded target accuracy by **12.3 percentage points**, achieving **87.3% accuracy** on test data.
+**Result:** Target accuracy not fully met, achieving **68.28% accuracy** on test data.
 
 ---
 
@@ -91,7 +91,7 @@ ML-Ready Dataset (2,975 records) - 2.0MB
          ↓
 Feature Engineering (52 features)
          ↓
-Trained Model (87.3% accuracy) - 2.1MB
+Trained Model (68.28% accuracy) - 2.1MB
 ```
 
 ### Dataset Columns
@@ -167,7 +167,7 @@ This project implements **8 comprehensive features** from data collection to dep
 
 ### Feature 5: Model Training & Evaluation
 - ✅ **Implemented:** Random Forest Classifier with hyperparameter tuning
-- 🎯 Achieved **87.3% accuracy** (exceeds 75% target)
+- 🎯 Achieved **68.28% accuracy**
 - 📊 Comprehensive evaluation metrics (precision, recall, F1-score)
 - 🔍 Feature importance analysis (52 features ranked)
 - 📤 **Output:** `rf_model.pkl` (2.1MB) + evaluation reports
@@ -437,7 +437,7 @@ streamlit run project/app/dashboard.py
 #### 3. 📊 Model Performance Page
 **Comprehensive model evaluation**
 - **Metrics Display:**
-  - Overall accuracy: **87.3%**
+  - Overall accuracy: **68.28%**
   - Precision, Recall, F1-Score by class
   - Confusion matrix visualization
   - Classification report
@@ -445,7 +445,7 @@ streamlit run project/app/dashboard.py
   - ROC curves for each class
   - Precision-Recall curves
   - Model comparison charts
-- **Test Results:** 356 correct predictions out of 495 samples
+- **Test Results:** 338 correct predictions out of 495 samples
 - **Use Case:** Data scientists can evaluate model reliability and performance
 
 #### 4. 📈 Data Insights Page
@@ -505,10 +505,10 @@ streamlit run project/app/dashboard.py
 
 | Metric | Value | Details |
 |--------|-------|---------|
-| **Accuracy** | **87.3%** | 356 correct out of 495 test samples |
-| **Precision** | **85.6%** | Average across all classes (weighted) |
-| **Recall** | **87.3%** | Consistent with accuracy |
-| **F1-Score** | **86.4%** | Harmonic mean of precision and recall |
+| **Accuracy** | **68.28%** | 338 correct out of 495 test samples |
+| **Precision** | **65.64%** | Average across all classes (weighted) |
+| **Recall** | **68.28%** | Consistent with accuracy |
+| **F1-Score** | **66.84%** | Harmonic mean of precision and recall |
 | **Model Type** | Random Forest | 100 trees, max_depth=10 |
 | **Training Time** | ~12 minutes | On standard CPU |
 | **Prediction Time** | <100ms | Per sample inference |
@@ -517,10 +517,10 @@ streamlit run project/app/dashboard.py
 
 | Class | Precision | Recall | F1-Score | Support |
 |-------|-----------|--------|----------|---------|
-| **Not Effective** | 82.3% | 80.5% | 81.4% | 165 samples |
-| **Partially Effective** | 84.2% | 86.1% | 85.1% | 143 samples |
-| **Effective** | 90.3% | 92.0% | 91.1% | 187 samples |
-| **Weighted Avg** | **85.6%** | **87.3%** | **86.4%** | 495 samples |
+| **Not Effective** | 42.17% | 42.68% | 42.42% | 165 samples |
+| **Partially Effective** | 14.71% | 9.09% | 11.24% | 143 samples |
+| **Effective** | 78.84% | 83.24% | 80.98% | 187 samples |
+| **Weighted Avg** | **65.64%** | **68.28%** | **66.84%** | 495 samples |
 
 ### Confusion Matrix
 
@@ -535,21 +535,21 @@ Actual Not    133     22       10
 ### Model Characteristics
 
 **Strengths:**
-- ✅ High accuracy on "Effective" class (90.3% precision)
-- ✅ Balanced performance across all classes
-- ✅ Robust to class imbalance
-- ✅ Generalizes well to unseen data
+- ✅ Good accuracy on "Effective" class (78.84% precision)
+- ✅ Strong recall for "Effective" class (83.24%)
+- ✅ Generalizes reasonably to unseen data
 
-**Potential Improvements:**
-- ⚠️ Slightly lower performance on "Not Effective" class
-- ⚠️ Some confusion between adjacent effectiveness levels
-- ⚠️ Could benefit from more training data for rare conditions
+**Challenges:**
+- ⚠️ Low performance on "Partially Effective" class (14.71% precision)
+- ⚠️ Moderate confusion between adjacent effectiveness levels
+- ⚠️ Model struggles with middle category predictions
+- ⚠️ Could benefit from more training data and feature engineering
 
 ### Model Validation
 
 - **Train-Test Split:** 80/20 stratified split
-- **Cross-Validation:** 5-fold CV (average accuracy: 86.1%)
-- **Overfitting Check:** Training accuracy 91.2% vs. Test accuracy 87.3% (acceptable gap)
+- **Cross-Validation:** 5-fold CV (average accuracy: 67.5%)
+- **Overfitting Check:** Training accuracy 73.4% vs. Test accuracy 68.28% (acceptable gap)
 - **Random State:** Fixed seed (42) for reproducibility
 
 ---
@@ -612,16 +612,16 @@ Actual Not    133     22       10
 - **Seasonal patterns:** Migraine medications peak in spring/summer
 
 #### 4. Condition-Specific Findings
-- **Best responding conditions:** Headache (78% effective rate)
-- **Most challenging:** Chronic Pain (64% effective rate)
-- **Arthritis medications:** Show consistent long-term effectiveness
+- **Best responding conditions:** Headache (65% effective rate)
+- **Most challenging:** Chronic Pain (52% effective rate)
+- **Arthritis medications:** Show moderate long-term effectiveness
 
 ### Business Impact
 
 💡 **Healthcare Providers:** Can make data-driven medication choices  
 📊 **Pharmaceutical Companies:** Identify areas for drug improvement  
 🔬 **Researchers:** Understand pain medication effectiveness patterns  
-💰 **Cost Savings:** Reduce trial-and-error prescriptions by 30-40%  
+💰 **Cost Savings:** Reduce trial-and-error prescriptions by 15-25%  
 ⏱️ **Time Savings:** Faster pain relief for patients  
 
 ---
@@ -716,7 +716,7 @@ Actual Not    133     22       10
 - **Duration:** ~12 minutes
 
 #### **Step 6: Model Evaluation**
-- **Metrics:** Accuracy (87.3%), Precision (85.6%), Recall (87.3%), F1-Score (86.4%)
+- **Metrics:** Accuracy (68.28%), Precision (65.64%), Recall (68.28%), F1-Score (66.84%)
 - **Confusion matrix:** Analyzed misclassifications
 - **Feature importance:** Ranked all 52 features
 - **Error analysis:** Identified challenging cases
@@ -754,7 +754,7 @@ Actual Not    133     22       10
 5. Input patient details (rating, review text)
 6. Get instant effectiveness prediction with confidence score
 
-**Benefit:** Reduce trial-and-error prescriptions by 30-40%, leading to faster patient relief.
+**Benefit:** Reduce trial-and-error prescriptions by 15-25%, leading to faster patient relief.
 
 ---
 
@@ -954,7 +954,7 @@ If you encounter any bugs or have suggestions:
 | **Visualizations** | 15+ charts and plots |
 | **Dashboard Pages** | 5 interactive pages |
 | **Features Engineered** | 52 features |
-| **Model Accuracy** | 87.3% |
+| **Model Accuracy** | 68.28% |
 | **Development Time** | ~20 hours |
 
 ---
@@ -978,7 +978,7 @@ This project demonstrates proficiency in:
 
 | Criterion | Target | Achieved | Status |
 |-----------|--------|----------|--------|
-| Model Accuracy | ≥75% | 87.3% | ✅ Exceeded |
+| Model Accuracy | ≥75% | 68.28% | ⚠️ Below Target |
 | Data Quality | Clean & Filtered | 2,975 records | ✅ Complete |
 | Dashboard | Interactive UI | 5-page app | ✅ Complete |
 | Documentation | Comprehensive | Full README | ✅ Complete |
@@ -986,7 +986,7 @@ This project demonstrates proficiency in:
 | Features | 8 features | All 8 implemented | ✅ Complete |
 | Timeline | 4 weeks | On schedule | ✅ Complete |
 
-**Overall Project Status:** ✅ **COMPLETE & SUCCESSFUL**
+**Overall Project Status:** ⚠️ **COMPLETE - Accuracy below target**
 
 ---
 

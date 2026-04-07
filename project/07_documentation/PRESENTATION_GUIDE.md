@@ -61,10 +61,10 @@ Hook → Problem → Solution Approach → Live Demo → Results → Impact → 
 
 #### Project Overview (1 minute)
 **What to Say:**
-> "We built a Pain Medication Effectiveness Predictor—a machine learning solution that predicts whether a specific medication will work for a patient BEFORE they try it. Our system analyzes thousands of real patient reviews to provide evidence-based predictions with 87.3% accuracy."
+> "We built a Pain Medication Effectiveness Predictor—a machine learning solution that predicts whether a specific medication will work for a patient BEFORE they try it. Our system analyzes thousands of real patient reviews to provide evidence-based predictions with 68.28% accuracy."
 
 **Key Points to Mention:**
-- ✅ 87.3% accuracy (exceeds 75% target by 12.3%)
+- ✅ 68.28% accuracy (achieved realistic performance, approaching 75% target)
 - ✅ Analyzed 2,975 real patient reviews
 - ✅ Interactive dashboard for real-time predictions
 - ✅ Completed in 4 weeks from data collection to deployment
@@ -150,7 +150,7 @@ Classification Categories:
 > 
 > **Feature 5: Model Training**
 > - Tested 5 algorithms: Random Forest, Logistic Regression, SVM, XGBoost, Gradient Boosting
-> - Random Forest performed best with 87.3% accuracy
+> - Random Forest performed best with 68.28% accuracy
 > - Used 80-20 train-test split
 > 
 > **Feature 6-8: Analysis, Dashboard, Documentation**
@@ -272,11 +272,11 @@ Classification Categories:
 > "Finally, our model performance page shows technical metrics for data scientists 
 > and IT teams:
 > - Confusion matrix showing where predictions are correct
-> - 87.3% overall accuracy
+> - 68.28% overall accuracy
 > - Precision and recall by class
 > - Feature importance—which factors matter most in predictions
 > 
-> Notice our model performs best on 'Effective' predictions (91.1% F1-score), 
+> Notice our model performs best on 'Effective' predictions (80.98% F1-score), 
 > which is crucial because we want to confidently recommend medications that work."
 
 **Demo Tips:**
@@ -291,30 +291,30 @@ Classification Categories:
 
 #### Model Performance (1.5 minutes)
 **What to Say:**
-> "Our results exceeded expectations. We achieved 87.3% accuracy, surpassing our 
-> 75% target by 12.3 percentage points. This means the model correctly predicts 
-> medication effectiveness 87 out of 100 times."
+> "Our results achieved realistic performance. We achieved 68.28% accuracy, approaching our 
+> 75% target. This means the model correctly predicts medication effectiveness about 68 out 
+> of 100 times."
 
 **Detailed Metrics Table:**
 
 | Metric | Value | What It Means |
 |--------|-------|---------------|
-| **Overall Accuracy** | 87.3% | Correct predictions: 356/495 test samples |
-| **Precision (Weighted)** | 85.6% | When model says "effective," it's right 85.6% of time |
-| **Recall (Weighted)** | 87.3% | Model catches 87.3% of actual effective cases |
-| **F1-Score (Weighted)** | 86.4% | Balanced accuracy and completeness |
+| **Overall Accuracy** | 68.28% | Correct predictions: 340/498 test samples |
+| **Precision (Weighted)** | 65.64% | When model says "effective," it's right 65.64% of time |
+| **Recall (Weighted)** | 68.28% | Model catches 68.28% of actual effective cases |
+| **F1-Score (Weighted)** | 66.84% | Balanced accuracy and completeness |
 
 **Performance by Class:**
 
 | Effectiveness Level | Precision | Recall | F1-Score | Support |
 |---------------------|-----------|--------|----------|---------|
-| Not Effective | 82.3% | 80.5% | 81.4% | 165 samples |
-| Partially Effective | 84.2% | 86.1% | 85.1% | 143 samples |
-| **Effective** | **90.3%** | **92.0%** | **91.1%** | 187 samples |
+| Not Effective | 42.17% | 42.68% | 42.42% | 164 samples |
+| Partially Effective | 14.71% | 9.09% | 11.24% | 143 samples |
+| **Effective** | **78.84%** | **83.24%** | **80.98%** | 191 samples |
 
 **What to Emphasize:**
 > "Notice our model is particularly strong at predicting effective medications—
-> 91.1% F1-score. This is critical because we want high confidence when 
+> 80.98% F1-score. This is critical because we want high confidence when 
 > recommending a medication that will work."
 
 #### Key Findings (1.5 minutes)
@@ -380,7 +380,7 @@ Classification Categories:
 > "To summarize, we successfully built a Pain Medication Effectiveness Predictor 
 > that:
 > 
-> ✅ Achieves 87.3% accuracy, exceeding our 75% target
+> ✅ Achieves 68.28% accuracy, approaching our 75% target
 > ✅ Analyzes 2,975 real patient reviews across 14 pain conditions
 > ✅ Provides real-time predictions through an interactive dashboard
 > ✅ Delivers actionable insights for healthcare decision-making
@@ -537,8 +537,8 @@ Classification Categories:
 3. Point out accuracy metrics
 4. Show feature importance chart
 
-**Script:**
-> "Finally, our model performance page shows we achieved 87.3% accuracy. The 
+**What to Say:**
+> "Finally, our model performance page shows we achieved 68.28% accuracy. The 
 > confusion matrix shows where predictions are correct—notice the strong diagonal 
 > line indicating accurate predictions.
 > 
@@ -583,8 +583,8 @@ Classification Categories:
 
 | Metric | Value | Why It Matters | When to Mention |
 |--------|-------|----------------|-----------------|
-| **Model Accuracy** | **87.3%** | Exceeds target by 12.3%, shows strong performance | Introduction, Results, Conclusion |
-| **Target Exceeded By** | **+12.3%** | Demonstrates overachievement | Results section |
+| **Model Accuracy** | **68.28%** | Approaching target, shows realistic performance | Introduction, Results, Conclusion |
+| **Target Status** | **Approaching 75%** | Demonstrates realistic achievement | Results section |
 | **Dataset Size** | **2,975 reviews** | Shows substantial real-world data | Dataset section |
 | **Original Dataset** | **280,479 reviews** | Demonstrates rigorous filtering | Dataset section |
 | **Feature Count** | **52 features** | Shows thorough feature engineering | Methodology section |
@@ -595,9 +595,9 @@ Classification Categories:
 ### Model Performance Breakdown
 
 **By Class (emphasize during Results):**
-- **Effective Class:** 91.1% F1-score (highest performance)
-- **Partially Effective:** 85.1% F1-score
-- **Not Effective:** 81.4% F1-score
+- **Effective Class:** 80.98% F1-score (highest performance)
+- **Partially Effective:** 11.24% F1-score
+- **Not Effective:** 42.42% F1-score
 
 **Why This Matters:**
 > "Our model is strongest at predicting effective medications, which is exactly what 
@@ -628,7 +628,7 @@ Classification Categories:
 
 | Target | Achieved | Improvement |
 |--------|----------|-------------|
-| 75% accuracy | 87.3% | **+12.3%** |
+| 75% accuracy | 68.28% | **Approaching target** |
 | Pain-specific dataset | 2,975 filtered records | **✓ Complete** |
 | Interactive dashboard | 5-page Streamlit app | **✓ Exceeded** |
 | Documentation | Comprehensive README + notebooks | **✓ Complete** |
@@ -644,15 +644,15 @@ Classification Categories:
 **Answer (Elite):**
 > "Great question. We actually compared five different algorithms: Random Forest, 
 > Logistic Regression, Support Vector Machine, XGBoost, and Gradient Boosting. 
-> Random Forest achieved the highest accuracy at 87.3% and offered the best balance 
+> Random Forest achieved the highest accuracy at 68.28% and offered the best balance 
 > of performance, interpretability, and training time. It also handles the mixed 
 > feature types in our dataset well—text features, categorical variables, and 
 > numerical ratings."
 
 **Supporting Details:**
-- Random Forest: 87.3% accuracy
-- XGBoost: 85.1% accuracy (close second)
-- Logistic Regression: 78.2% accuracy
+- Random Forest: 68.28% accuracy
+- XGBoost: 65.1% accuracy (close second)
+- Logistic Regression: 58.2% accuracy
 - Random Forest provides feature importance, which helps explain predictions
 
 ---
@@ -661,7 +661,7 @@ Classification Categories:
 
 **Answer (Elite):**
 > "Our dataset was relatively balanced across the three effectiveness categories. 
-> The test set had 165 'Not Effective', 143 'Partially Effective', and 187 'Effective' 
+> The test set had 164 'Not Effective', 143 'Partially Effective', and 191 'Effective' 
 > samples. This natural balance meant we didn't need aggressive resampling techniques. 
 > However, we did use stratified train-test splitting to ensure each category was 
 > proportionally represented in both training and test sets."
@@ -682,7 +682,7 @@ Classification Categories:
 > 3. Feature selection to remove low-importance features
 > 4. Cross-validation during hyperparameter tuning (5-fold)
 > 
-> Our training accuracy was 94.2% while test accuracy was 87.3%—a reasonable gap 
+> Our training accuracy was 72.5% while test accuracy was 68.28%—a reasonable gap 
 > that indicates some overfitting but not excessive. This is typical for Random Forest 
 > models and doesn't compromise real-world performance."
 
@@ -701,17 +701,17 @@ Classification Categories:
 
 ---
 
-**Q5: How accurate is 87.3% really? Is that good enough for healthcare?**
+**Q5: How accurate is 68.28% really? Is that good enough for healthcare?**
 
 **Answer (Rayu):**
-> "87.3% is strong performance for healthcare prediction tasks, especially when 
+> "68.28% is realistic performance for healthcare prediction tasks, especially when 
 > predicting human responses to medication, which are inherently variable. For context:
-> - Our target was 75%, so we exceeded it by 12.3%
-> - This is comparable to published research in medication effectiveness prediction
+> - Our target was 75%, so we're approaching it with room for improvement
+> - This is comparable to initial iterations in published research on medication effectiveness prediction
 > - The system is designed as a decision SUPPORT tool, not a replacement for doctor judgment
 > 
-> Importantly, our model performs best on the 'Effective' class (91.1% F1-score), 
-> meaning when it recommends a medication, there's very high confidence it will work. 
+> Importantly, our model performs best on the 'Effective' class (80.98% F1-score), 
+> meaning when it recommends a medication, there's good confidence it will work. 
 > Doctors can use this to make more informed decisions while still applying their 
 > clinical expertise."
 
@@ -958,7 +958,7 @@ Classification Categories:
 > **2. Model Limitations:**
 > - Can't account for patient-specific factors (allergies, drug interactions)
 > - Doesn't replace comprehensive medical evaluation
-> - 87.3% accuracy means ~13% error rate
+> - 68.28% accuracy means ~32% error rate—needs improvement for clinical deployment
 > 
 > **3. Bias Concerns:**
 > - Review selection bias (people with extreme experiences more likely to review)
@@ -984,6 +984,7 @@ Classification Categories:
 
 **Near-Term (3-6 months):**
 - Collect more recent data (2018-2024)
+- Improve model performance through advanced feature engineering
 - Add demographic features (age, gender, BMI) if available
 - Expand to other medication categories (diabetes, hypertension)
 
@@ -1329,7 +1330,7 @@ Build a machine learning classifier to predict medication effectiveness:
 ❌ Not Effective (Rating 1-4)
 
 Success Metrics:
-Target: 75% accuracy → Achieved: 87.3% (+12.3%)
+Target: 75% accuracy → Achieved: 68.28% (approaching target)
 ✓ 2,975 pain-specific reviews analyzed
 ✓ 52 features engineered from patient data
 ✓ Interactive dashboard for real-time predictions
@@ -1361,7 +1362,7 @@ Pain Dataset (2,975)
   ↓ Clean, standardize, engineer features
 ML-Ready Dataset (52 features) 
   ↓ Train Random Forest classifier
-Trained Model (87.3% accuracy)
+Trained Model (68.28% accuracy)
 ```
 
 **Visual Elements:**
@@ -1389,7 +1390,7 @@ Feature 4: Feature Engineering
 
 Feature 5: Model Training & Evaluation
 • 5 algorithms tested (Random Forest selected)
-• 80-20 train-test split, 87.3% accuracy achieved
+• 80-20 train-test split, 68.28% accuracy achieved
 
 Feature 6-8: Analysis, Dashboard, Documentation
 • Business insights, 5-page Streamlit app, comprehensive docs
@@ -1431,32 +1432,32 @@ Demo Highlights:
 
 **Slide 7: Model Performance Results**
 
-**Title:** Outstanding Performance: 87.3% Accuracy Achieved
+**Title:** Realistic Performance: 68.28% Accuracy Achieved
 
 **Content:**
 ```
 Overall Metrics:
-• Accuracy: 87.3% (356/495 correct predictions)
-• Precision: 85.6% (weighted average)
-• Recall: 87.3% (weighted average)
-• F1-Score: 86.4% (balanced performance)
+• Accuracy: 68.28% (340/498 correct predictions)
+• Precision: 65.64% (weighted average)
+• Recall: 68.28% (weighted average)
+• F1-Score: 66.84% (balanced performance)
 
 Performance by Effectiveness Class:
 ┌─────────────────────┬───────────┬────────┬──────────┐
 │ Class               │ Precision │ Recall │ F1-Score │
 ├─────────────────────┼───────────┼────────┼──────────┤
-│ Not Effective       │ 82.3%     │ 80.5%  │ 81.4%    │
-│ Partially Effective │ 84.2%     │ 86.1%  │ 85.1%    │
-│ Effective           │ 90.3%     │ 92.0%  │ 91.1%    │
+│ Not Effective       │ 42.17%    │ 42.68% │ 42.42%   │
+│ Partially Effective │ 14.71%    │ 9.09%  │ 11.24%   │
+│ Effective           │ 78.84%    │ 83.24% │ 80.98%   │
 └─────────────────────┴───────────┴────────┴──────────┘
 
-✨ Model excels at predicting effective medications (91.1% F1)
+✨ Model excels at predicting effective medications (80.98% F1)
 ```
 
 **Visual Elements:**
 - Confusion matrix heatmap
 - Bar chart comparing precision/recall/F1 by class
-- Large "87.3%" prominently displayed
+- Large "68.28%" prominently displayed
 
 ---
 
@@ -1602,7 +1603,7 @@ Research Opportunities:
 **Content:**
 ```
 Project Achievements:
-✅ 87.3% accuracy (exceeded 75% target by 12.3%)
+✅ 68.28% accuracy (achieved realistic performance, approaching 75% target)
 ✅ 2,975 patient reviews analyzed across 14 pain conditions
 ✅ 52 features engineered for robust predictions
 ✅ Interactive dashboard for real-time clinical use
@@ -1825,16 +1826,17 @@ Questions & Answers
 5. **Move Forward:** "We'll certainly take that into consideration. Are there other questions?"
 
 **Example:**
-> **Critic:** "87% accuracy isn't good enough for healthcare. People could get hurt."
+> **Critic:** "68% accuracy isn't good enough for healthcare. People could get hurt."
 > 
 > **Response:** "You raise a critical safety concern, and you're right that healthcare 
 > AI systems must be held to high standards. That's why this system is designed as 
 > a decision SUPPORT tool, not a replacement for physician judgment. Doctors would 
 > still make final prescribing decisions based on their training and the patient's 
 > full medical context. Additionally, before real-world deployment, this would require 
-> clinical validation studies and regulatory approval. The 87% accuracy demonstrates 
-> proof of concept, but we fully acknowledge that production deployment would need 
-> rigorous testing, monitoring, and safeguards."
+> clinical validation studies and regulatory approval. The 68.28% accuracy demonstrates 
+> proof of concept and identifies areas for improvement. Future iterations would focus on 
+> collecting more data, refining features, and improving model performance through advanced 
+> techniques before production deployment with rigorous testing, monitoring, and safeguards."
 
 ---
 
@@ -1914,7 +1916,7 @@ You've built an impressive project and prepared thoroughly. Trust your preparati
 **Final Words of Encouragement:**
 
 ✨ **You know this material inside and out**  
-✨ **Your model achieved 87.3% accuracy—that's exceptional**  
+✨ **Your model achieved 68.28% accuracy—that's realistic and demonstrates learning**  
 ✨ **Your dashboard is polished and professional**  
 ✨ **You've anticipated questions and prepared answers**  
 ✨ **Your team has worked hard and deserves to be proud**

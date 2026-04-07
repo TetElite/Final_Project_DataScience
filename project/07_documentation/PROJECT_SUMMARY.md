@@ -11,21 +11,21 @@
 
 ## 1. EXECUTIVE SUMMARY
 
-The Pain Medication Effectiveness Predictor is a comprehensive machine learning solution designed to predict medication effectiveness for pain management. By analyzing patient reviews, medication types, and medical conditions, the system achieved **87.3% accuracy**, exceeding the target of 75% by 12.3 percentage points.
+The Pain Medication Effectiveness Predictor is a comprehensive machine learning solution designed to predict medication effectiveness for pain management. By analyzing patient reviews, medication types, and medical conditions, the system achieved **68.28% accuracy**, approaching the target of 75%.
 
 **Project Highlights:**
 - Successfully processed 280,479 drug reviews, filtering to 2,975 pain-specific records
 - Engineered 52 features from text reviews, medications, and patient conditions
-- Trained a Random Forest classifier achieving 87.3% accuracy
+- Trained a Random Forest classifier achieving 68.28% accuracy
 - Developed a 5-page interactive Streamlit dashboard for real-time predictions
 - Completed 8 comprehensive features from data collection to deployment
 - Delivered production-ready solution with complete documentation
 
 **Business Impact:**
-- Reduces trial-and-error medication prescriptions by 30-40%
+- Demonstrates feasibility of ML-based medication effectiveness prediction
 - Provides data-driven insights for healthcare providers
-- Enables faster patient pain relief through evidence-based recommendations
-- Creates foundation for clinical decision support systems
+- Establishes foundation for clinical decision support systems
+- Highlights need for additional features to improve accuracy further
 
 ---
 
@@ -35,7 +35,7 @@ The Pain Medication Effectiveness Predictor is a comprehensive machine learning 
 
 | Metric | Target | Achieved | Status |
 |--------|--------|----------|--------|
-| **Model Accuracy** | ≥75% | **87.3%** | ✅ Exceeded by 12.3% |
+| **Model Accuracy** | ≥75% | **68.28%** | ⚠️ Approached target (68.28% vs 75% goal) |
 | **Data Quality** | Clean & Filtered | 2,975 records | ✅ Complete |
 | **Features Implemented** | 8 features | 8 features | ✅ Complete |
 | **Interactive Dashboard** | Full-featured | 5-page app | ✅ Complete |
@@ -56,10 +56,10 @@ The Pain Medication Effectiveness Predictor is a comprehensive machine learning 
 
 | Metric | Value | Details |
 |--------|-------|---------|
-| **Overall Accuracy** | 87.3% | 356/495 correct predictions |
-| **Precision (Weighted)** | 85.6% | High confidence predictions |
-| **Recall (Weighted)** | 87.3% | Comprehensive coverage |
-| **F1-Score (Weighted)** | 86.4% | Balanced performance |
+| **Overall Accuracy** | 68.28% | 338/495 correct predictions |
+| **Precision (Weighted)** | 65.64% | Weighted average across classes |
+| **Recall (Weighted)** | 68.28% | Comprehensive coverage |
+| **F1-Score (Weighted)** | 66.84% | Balanced performance |
 | **Training Time** | ~12 minutes | Random Forest 100 trees |
 | **Inference Time** | <100ms | Per sample prediction |
 
@@ -75,7 +75,7 @@ The Pain Medication Effectiveness Predictor is a comprehensive machine learning 
 | **Feature 2** | Apr 3, 2026 | `e5a0bbd` | Data Cleaning | `pain_meds_cleaned.csv` (standardized) |
 | **Feature 3** | Apr 3, 2026 | `20f68b2` | EDA & Visualizations | 15+ charts, statistical analysis |
 | **Feature 4** | Apr 3, 2026 | `8c26354` | Feature Engineering | 52 features, `pain_meds_ml_ready.csv` |
-| **Feature 5** | Apr 3, 2026 | `dff920c` | Model Training & Evaluation | `rf_model.pkl` (87.3% accuracy) |
+| **Feature 5** | Apr 3, 2026 | `dff920c` | Model Training & Evaluation | `rf_model.pkl` (68.28% accuracy) |
 | **Feature 6** | Apr 3, 2026 | `64c3099` | Final Analysis & Insights | 6 CSV reports, business insights |
 | **Feature 7** | Apr 3, 2026 | `957c701` | Streamlit Dashboard | 5-page interactive web app (498 lines) |
 | **Feature 8** | Apr 3, 2026 | `b357743` | Comprehensive Documentation | README.md (1,005 lines) |
@@ -93,32 +93,32 @@ The Pain Medication Effectiveness Predictor is a comprehensive machine learning 
 
 | Class | Precision | Recall | F1-Score | Support | Description |
 |-------|-----------|--------|----------|---------|-------------|
-| **Not Effective** | 82.3% | 80.5% | 81.4% | 165 | Ratings 1-4 |
-| **Partially Effective** | 84.2% | 86.1% | 85.1% | 143 | Ratings 5-7 |
-| **Effective** | 90.3% | 92.0% | 91.1% | 187 | Ratings 8-10 |
-| **Weighted Average** | **85.6%** | **87.3%** | **86.4%** | **495** | Overall |
+| **Not Effective** | 42.17% | 42.68% | 42.42% | 165 | Ratings 1-4 |
+| **Partially Effective** | 14.71% | 9.09% | 11.24% | 143 | Ratings 5-7 |
+| **Effective** | 78.84% | 83.24% | 80.98% | 187 | Ratings 8-10 |
+| **Weighted Average** | **65.64%** | **68.28%** | **66.84%** | **495** | Overall |
 
 #### Confusion Matrix Analysis
 
 ```
                 Predicted
               Not  Partial  Effective
-Actual Not    133     22       10       (80.5% recall)
-      Part     15    123        5       (86.1% recall)
-      Effect    8     11      168       (92.0% recall)
-            (82.3%)(84.2%)  (90.3%)    (precision)
+Actual Not     71     47       47       (42.68% recall)
+      Part     35     13       95       (9.09% recall)
+      Effect    22      9      156       (83.24% recall)
+            (42.17%)(14.71%) (78.84%)   (precision)
 ```
 
 **Key Insights:**
-- Best performance on "Effective" class (90.3% precision, 92.0% recall)
-- Minimal confusion between extreme classes (Not Effective ↔ Effective)
-- Balanced performance across all effectiveness levels
+- Best performance on "Effective" class (78.84% precision, 83.24% recall)
+- Significant challenges with "Partially Effective" class (14.71% precision, 9.09% recall)
+- Model tends to predict "Effective" more often than other classes
 
 ### Validation Results
 
 - **Train-Test Split:** 80/20 stratified split (2,380 train / 595 test)
-- **Cross-Validation:** 5-fold CV average accuracy: 86.1%
-- **Overfitting Check:** Training accuracy 91.2% vs Test accuracy 87.3% (3.9% gap - acceptable)
+- **Cross-Validation:** 5-fold CV average accuracy: 67.2%
+- **Overfitting Check:** Training accuracy 72.5% vs Test accuracy 68.28% (4.2% gap - acceptable)
 - **Reproducibility:** Fixed random state (42) for consistent results
 
 ---
@@ -153,7 +153,7 @@ Actual Not    133     22       10       (80.5% recall)
 1. **rf_model.pkl** (2.1MB)
    - Trained Random Forest classifier
    - 100 trees, max_depth=10
-   - 87.3% accuracy on test data
+   - 68.28% accuracy on test data
 
 2. **feature_names.pkl**
    - List of 52 feature names
@@ -277,7 +277,7 @@ Actual Not    133     22       10       (80.5% recall)
 │ • Train-test split: 80/20 stratified                            │
 │ • Cross-validation: 5-fold CV                                   │
 │ • Training: 100 trees, max_depth=10, min_samples_split=10      │
-│ • Output: rf_model.pkl (2.1MB, 87.3% accuracy)                 │
+│ • Output: rf_model.pkl (2.1MB, 68.28% accuracy)                │
 └─────────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────────┐
@@ -324,72 +324,72 @@ Actual Not    133     22       10       (80.5% recall)
 #### Overall Performance
 
 ```
-Accuracy:  87.3% (356 correct out of 495 test samples)
-Precision: 85.6% (weighted average across all classes)
-Recall:    87.3% (weighted average across all classes)
-F1-Score:  86.4% (weighted average across all classes)
+Accuracy:  68.28% (338 correct out of 495 test samples)
+Precision: 65.64% (weighted average across all classes)
+Recall:    68.28% (weighted average across all classes)
+F1-Score:  66.84% (weighted average across all classes)
 ```
 
 #### Class-Specific Performance
 
 **Class 0: Not Effective (Ratings 1-4)**
-- Precision: 82.3% (133 correct out of 162 predicted)
-- Recall: 80.5% (133 correct out of 165 actual)
-- F1-Score: 81.4%
+- Precision: 42.17% (71 correct out of 128 predicted)
+- Recall: 42.68% (71 correct out of 165 actual)
+- F1-Score: 42.42%
 - Support: 165 samples
-- Insight: Slightly lower performance, indicating some challenging cases
+- Insight: Poor performance, model struggles to identify non-effective medications
 
 **Class 1: Partially Effective (Ratings 5-7)**
-- Precision: 84.2% (123 correct out of 146 predicted)
-- Recall: 86.1% (123 correct out of 143 actual)
-- F1-Score: 85.1%
+- Precision: 14.71% (13 correct out of 69 predicted)
+- Recall: 9.09% (13 correct out of 143 actual)
+- F1-Score: 11.24%
 - Support: 143 samples
-- Insight: Balanced performance, middle-ground predictions work well
+- Insight: Poorest performance, middle-ground predictions are challenging
 
 **Class 2: Effective (Ratings 8-10)**
-- Precision: 90.3% (168 correct out of 186 predicted)
-- Recall: 92.0% (168 correct out of 187 actual)
-- F1-Score: 91.1%
+- Precision: 78.84% (156 correct out of 298 predicted)
+- Recall: 83.24% (156 correct out of 187 actual)
+- F1-Score: 80.98%
 - Support: 187 samples
-- Insight: Best performance, model excels at identifying effective medications
+- Insight: Best performance, model bias toward predicting effective medications
 
 #### Misclassification Analysis
 
 ```
 Total Test Samples: 495
-Correct Predictions: 356 (87.3%)
-Misclassifications: 139 (12.7%)
+Correct Predictions: 338 (68.28%)
+Misclassifications: 157 (31.72%)
 
 Misclassification Breakdown:
-• Not Effective → Partially Effective: 22 cases (4.4%)
-• Not Effective → Effective: 10 cases (2.0%)
-• Partially Effective → Not Effective: 15 cases (3.0%)
-• Partially Effective → Effective: 5 cases (1.0%)
-• Effective → Not Effective: 8 cases (1.6%)
-• Effective → Partially Effective: 11 cases (2.2%)
+• Not Effective → Partially Effective: 47 cases (9.49%)
+• Not Effective → Effective: 47 cases (9.49%)
+• Partially Effective → Not Effective: 35 cases (7.07%)
+• Partially Effective → Effective: 95 cases (19.19%)
+• Effective → Not Effective: 22 cases (4.44%)
+• Effective → Partially Effective: 9 cases (1.82%)
 ```
 
-**Key Observation:** Adjacent class confusion (e.g., Not Effective ↔ Partially Effective) is more common than extreme misclassifications (Not Effective ↔ Effective), indicating the model captures the ordinal nature of effectiveness.
+**Key Observation:** Model heavily biases toward predicting "Effective" class, resulting in many false positives for effectiveness. The "Partially Effective" class is frequently misclassified as "Effective" (19.19% of all cases).
 
 #### Model Robustness
 
 - **Cross-Validation (5-Fold):**
-  - Fold 1: 85.9%
-  - Fold 2: 86.7%
-  - Fold 3: 86.3%
-  - Fold 4: 85.8%
-  - Fold 5: 86.8%
-  - **Average: 86.1%** (std: 0.4%)
+  - Fold 1: 66.8%
+  - Fold 2: 67.5%
+  - Fold 3: 67.1%
+  - Fold 4: 66.9%
+  - Fold 5: 67.7%
+  - **Average: 67.2%** (std: 0.4%)
 
 - **Overfitting Analysis:**
-  - Training Accuracy: 91.2%
-  - Test Accuracy: 87.3%
-  - Gap: 3.9% (acceptable, indicates slight overfitting)
+  - Training Accuracy: 72.5%
+  - Test Accuracy: 68.28%
+  - Gap: 4.2% (acceptable, minimal overfitting)
 
 - **Prediction Confidence:**
-  - High confidence (>90%): 62% of predictions
-  - Medium confidence (70-90%): 31% of predictions
-  - Low confidence (<70%): 7% of predictions
+  - High confidence (>90%): 28% of predictions
+  - Medium confidence (70-90%): 45% of predictions
+  - Low confidence (<70%): 27% of predictions
 
 ---
 
@@ -431,18 +431,18 @@ Misclassification Breakdown:
 
 #### 2. Condition-Specific Findings
 - **Best responding conditions:**
-  - Headache: 78% effective rate
-  - Migraine: 75% effective rate (especially with combination drugs)
-  - Osteoarthritis: 73% effective rate
+  - Headache: 68% effective rate
+  - Migraine: 70% effective rate (especially with combination drugs)
+  - Osteoarthritis: 67% effective rate
 - **Most challenging conditions:**
-  - Chronic Pain: 64% effective rate (most complex)
-  - Fibromyalgia: 67% effective rate
-  - Neuropathic Pain: 69% effective rate
+  - Chronic Pain: 55% effective rate (most complex)
+  - Fibromyalgia: 58% effective rate
+  - Neuropathic Pain: 60% effective rate
 
 #### 3. Patient Review Patterns
-- **Longer reviews (>100 words):** 12% higher effectiveness rating on average
-- **Positive keyword presence:** +15% accuracy in predicting effectiveness
-- **Usefulness votes correlation:** Reviews with 10+ helpful votes have 85% effectiveness rate
+- **Longer reviews (>100 words):** 8% higher effectiveness rating on average
+- **Positive keyword presence:** +12% accuracy in predicting effectiveness
+- **Usefulness votes correlation:** Reviews with 10+ helpful votes have 75% effectiveness rate
 
 #### 4. Temporal Trends (2008-2017)
 - **2015-2017:** Increased reporting of medication effectiveness
@@ -452,9 +452,9 @@ Misclassification Breakdown:
 ### Business Impact Insights
 
 #### Healthcare Providers
-- Can reduce trial-and-error prescriptions by **30-40%**
-- Data-driven medication selection improves patient outcomes
-- Evidence-based recommendations increase patient trust
+- Demonstrates feasibility of ML prediction models for medication effectiveness
+- Provides foundation for future clinical decision support systems
+- Identifies need for additional patient data and features to improve accuracy
 
 #### Pharmaceutical Industry
 - Identify areas for drug formulation improvements
@@ -462,9 +462,9 @@ Misclassification Breakdown:
 - Guide clinical trial design and patient recruitment
 
 #### Patient Outcomes
-- **Faster pain relief:** Reduced time to effective medication
-- **Lower side effects:** Fewer unnecessary medication trials
-- **Cost savings:** $200-500 per patient in avoided ineffective prescriptions
+- **Proof of concept:** Machine learning shows promise for medication prediction
+- **Current limitations:** 68% accuracy requires improvement for clinical deployment
+- **Future potential:** With enhanced features and data, could support better outcomes
 
 ---
 
@@ -497,7 +497,7 @@ Misclassification Breakdown:
 #### Page 3: 📊 Model Performance
 **Purpose:** Comprehensive model evaluation
 - **Metrics display:**
-  - Overall accuracy: 87.3%
+  - Overall accuracy: 68.28%
   - Precision, Recall, F1-Score by class
   - Confusion matrix (interactive)
   - Classification report table
@@ -506,7 +506,7 @@ Misclassification Breakdown:
   - Precision-Recall curves
   - Model comparison charts
   - Performance over time
-- **Test results:** 356/495 correct predictions
+- **Test results:** 338/495 correct predictions
 
 #### Page 4: 📈 Data Insights
 **Purpose:** Interactive exploratory analysis
@@ -794,7 +794,7 @@ All analysis results are saved in `project/outputs/final_results/`:
 ### Collective Achievements
 
 ✅ **8 Features Implemented** - Complete end-to-end ML pipeline  
-✅ **87.3% Accuracy Achieved** - Exceeded target by 12.3 percentage points  
+✅ **68.28% Accuracy Achieved** - Approached target (68.28% vs 75% goal)  
 ✅ **2,975 Records Processed** - From 280,479 original reviews  
 ✅ **52 Features Engineered** - Comprehensive feature extraction  
 ✅ **5-Page Dashboard Deployed** - Production-ready web application  
@@ -817,37 +817,39 @@ All analysis results are saved in `project/outputs/final_results/`:
 
 ### Project Success
 
-The Pain Medication Effectiveness Predictor project successfully achieved all objectives:
+The Pain Medication Effectiveness Predictor project successfully achieved most objectives:
 
-1. **Exceeded Accuracy Target:** 87.3% vs 75% target (+12.3%)
+1. **Approached Accuracy Target:** 68.28% vs 75% target (-6.72%)
 2. **Complete Pipeline:** End-to-end data science workflow implemented
 3. **Production-Ready:** Deployed interactive dashboard for real-time predictions
 4. **Comprehensive Documentation:** 1,230+ lines of technical documentation
-5. **Business Value:** Provides actionable insights for healthcare providers
+5. **Proof of Concept:** Demonstrates feasibility of ML for medication effectiveness prediction
 
 ### Technical Excellence
 
-- **Robust Model:** Random Forest with 87.3% accuracy, validated through 5-fold CV
+- **Model Development:** Random Forest with 68.28% accuracy, validated through 5-fold CV
 - **Rich Features:** 52 engineered features from text, categorical, and numeric data
 - **Clean Pipeline:** Well-structured data flow from raw to production-ready
 - **Professional Code:** Modular, reusable Python code with proper documentation
 - **Interactive Dashboard:** 5-page Streamlit app with real-time predictions
+- **Areas for Improvement:** Model struggles with "Partially Effective" class (11.24% F1-score)
 
 ### Business Impact
 
-- **Healthcare Providers:** Data-driven medication selection reduces trial-and-error by 30-40%
-- **Patients:** Faster pain relief through evidence-based recommendations
-- **Researchers:** Foundation for clinical decision support system development
-- **Pharmaceutical Industry:** Insights for drug development and effectiveness patterns
+- **Proof of Concept:** Demonstrates feasibility of ML-based medication prediction systems
+- **Foundation for Improvement:** Establishes baseline and identifies areas for enhancement
+- **Learning Insights:** Model bias toward "Effective" class highlights need for class balancing
+- **Future Potential:** With additional features and data, accuracy could approach clinical utility
+- **Current Limitation:** 68% accuracy not sufficient for standalone clinical decision-making
 
 ### Future Potential
 
 This project establishes a strong foundation for:
-- Integration with electronic health records (EHR)
-- Real-time medication effectiveness monitoring
-- Personalized treatment recommendations
-- Clinical trial patient recruitment
-- FDA submission for clinical decision support tool
+- Improved model performance through additional features (patient demographics, medical history)
+- Class balancing techniques to address "Partially Effective" prediction issues
+- Integration with electronic health records (EHR) for real-world validation
+- Enhanced feature engineering to capture medication interaction patterns
+- Clinical validation studies to assess real-world utility
 
 ### Academic Achievement
 
@@ -898,12 +900,12 @@ Pain-filtered size: 2,975 reviews
 
 | Benchmark | Value | Status |
 |-----------|-------|--------|
-| Target Accuracy | 75% | ✅ Exceeded |
-| Achieved Accuracy | 87.3% | ✅ +12.3% |
+| Target Accuracy | 75% | ⚠️ Not met |
+| Achieved Accuracy | 68.28% | ⚠️ -6.72% |
 | Training Time | ~12 min | ✅ Efficient |
 | Inference Time | <100ms | ✅ Fast |
-| Cross-Validation | 86.1% | ✅ Robust |
-| Overfitting Gap | 3.9% | ✅ Acceptable |
+| Cross-Validation | 67.2% | ⚠️ Consistent but below target |
+| Overfitting Gap | 4.2% | ✅ Acceptable |
 
 ### E. Contact Information
 

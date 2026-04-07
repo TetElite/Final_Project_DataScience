@@ -93,9 +93,9 @@ st.markdown("""
 
 # Define paths
 BASE_DIR = Path(__file__).parent.parent
-DATA_DIR = BASE_DIR / "data"
-MODELS_DIR = BASE_DIR / "outputs" / "models"
-RESULTS_DIR = BASE_DIR / "outputs" / "final_results"
+DATA_DIR = BASE_DIR / "01_data"
+MODELS_DIR = BASE_DIR / "04_trained_models"
+RESULTS_DIR = BASE_DIR / "05_analysis_results"
 
 def preprocess_for_sentiment(text):
     """
@@ -126,10 +126,10 @@ def load_data():
         processed_data = pd.read_csv(DATA_DIR / "processed" / "pain_meds_ml_ready.csv")
         
         # Load results
-        top_drugs = pd.read_csv(RESULTS_DIR / "top_drugs_stats.csv")
-        top_conditions = pd.read_csv(RESULTS_DIR / "condition_effectiveness.csv")
-        feature_importance = pd.read_csv(RESULTS_DIR / "top_drugs.csv")  # This is actually feature importance
-        test_predictions = pd.read_csv(MODELS_DIR / "test_predictions.csv")
+        top_drugs = pd.read_csv(RESULTS_DIR / "insights" / "top_drugs_stats.csv")
+        top_conditions = pd.read_csv(RESULTS_DIR / "insights" / "condition_effectiveness.csv")
+        feature_importance = pd.read_csv(RESULTS_DIR / "insights" / "top_drugs.csv")  # This is actually feature importance
+        test_predictions = pd.read_csv(MODELS_DIR / "test_results" / "test_predictions.csv")
         
         return {
             'cleaned': cleaned_data,
@@ -147,9 +147,9 @@ def load_data():
 def load_model():
     """Load the trained Random Forest model"""
     try:
-        with open(MODELS_DIR / "rf_model.pkl", 'rb') as f:
+        with open(MODELS_DIR / "random_forest_v1" / "rf_model.pkl", 'rb') as f:
             model = pickle.load(f)
-        with open(MODELS_DIR / "feature_names.pkl", 'rb') as f:
+        with open(MODELS_DIR / "random_forest_v1" / "feature_names.pkl", 'rb') as f:
             feature_names = pickle.load(f)
         return model, feature_names
     except Exception as e:
@@ -772,7 +772,7 @@ prediction conflicts with your experience.
                 st.caption("Based on feature importance from trained Random Forest model")
                 
                 # Load actual feature importance
-                feat_importance = pd.read_csv(MODELS_DIR.parent.parent / "outputs" / "models" / "feature_importance.csv")
+                feat_importance = pd.read_csv(MODELS_DIR / "random_forest_v1" / "feature_importance.csv")
                 
                 # Calculate REAL contributions based on actual feature importance
                 contributions = []
